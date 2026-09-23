@@ -1,7 +1,7 @@
 [project]
 name = "ffdetails"
 version = "0.1.0"
-description = "Record Sleeper actuals, Sleeper projections, FantasyPros consensus projections, injury tags, and waiver bids."
+description = "Record Sleeper actuals, Sleeper projections, FantasyPros consensus projections, FantasyPros positional ranks, injury tags, and waiver bids."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []

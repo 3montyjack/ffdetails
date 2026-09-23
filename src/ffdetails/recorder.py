@@ -7,6 +7,7 @@ from datetime import datetime
 from ffdetails.fantasypros import POSITIONS, FantasyProsSource
 from ffdetails.records import (
     FantasyProsProjection,
+    FantasyProsRank,
     InjuryTag,
     SleeperActual,
     SleeperProjection,
@@ -79,6 +80,26 @@ class Recorder:
         )
         self.store.add_fantasypros_projections(records)
         return records
+
+    def record_fantasypros_ranks(
+        self,
+        season: int,
+        week: int,
+        *,
+        positions: tuple[str, ...] | list[str] = POSITIONS,
+        scoring: str = "HALF",
+        recorded_at: datetime | None = None,
+    ) -> list[FantasyProsRank]:
+        experts, ranks = self.fantasypros.positional_ranks(
+            season,
+            week,
+            positions=positions,
+            scoring=scoring,
+            recorded_at=recorded_at,
+        )
+        self.store.add_fantasypros_experts(experts)
+        self.store.add_fantasypros_ranks(ranks)
+        return ranks
 
     def record_injury_tags(
         self, *, recorded_at: datetime | None = None

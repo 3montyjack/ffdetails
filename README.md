@@ -1,10 +1,11 @@
 # ffdetails
 
-`ffdetails` records five published fantasy-football datasets:
+`ffdetails` records published fantasy-football datasets:
 
 - Sleeper weekly actuals
 - Sleeper weekly projections
 - FantasyPros consensus projections
+- FantasyPros weekly ranks from one public expert board per position
 - Sleeper injury tags
 - Sleeper waiver claim bids
 
@@ -27,6 +28,7 @@ ffdetails sleeper-actuals --season 2026 --week 1
 ffdetails sleeper-projections --season 2026 --week 3
 ffdetails fantasypros-projections --season 2026 --week 3 --scoring HALF
 ffdetails fantasypros-projections --season 2026 --season-long --scoring PPR
+ffdetails fantasypros-ranks --season 2026 --week 3 --scoring HALF
 ffdetails injury-tags
 ffdetails waiver-bids --league-id LEAGUE_ID --season 2026 --week 3
 ```
@@ -50,16 +52,22 @@ FantasyPros consensus pages are read as HTML. The recorder stores every player r
 
 `fpts` is the fantasy-point column on that page. When the page includes a more precise sort value, that value is stored.
 
+`fantasypros-ranks` records two snapshots from the weekly rankings pages. The expert directory is every ranker listed for that position, including in-season positional accuracy and the public board URL when FantasyPros publishes one. The rank rows are the player order from one board per position: the expert with the best in-season positional accuracy who still publishes a board. Experts without a public board are stored in the directory and left out of the rank rows. Equal accuracy ranks keep the lower expert id.
+
+RB, WR, and TE follow `--scoring` (`HALF` by default, or `STD` / `PPR`). QB, K, and DST stay on the standard board, because FantasyPros publishes those positions once. `hybrid_board` applies that same split when it reads a snapshot back.
+
 ## Library
 
 ```python
-from ffdetails import RecordStore, Recorder
+from ffdetails import RecordStore, Recorder, hybrid_board
 
 with RecordStore("ffdetails.sqlite") as store:
     recorder = Recorder(store)
     recorder.record_sleeper_actuals(2026, 1)
+    recorder.record_fantasypros_ranks(2026, 3)
     latest = store.sleeper_actuals(2026, 1)
     history = store.sleeper_actuals(2026, 1, history=True)
+    board = hybrid_board(store.fantasypros_experts(2026, 3), store.fantasypros_ranks(2026, 3))
 ```
 
 `SleeperSource` and `FantasyProsSource` accept any object with `get_json` and `get_text`, so tests can supply saved payloads.

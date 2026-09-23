@@ -13,7 +13,9 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from ffdetails.records import (
+    FantasyProsExpert,
     FantasyProsProjection,
+    FantasyProsRank,
     InjuryTag,
     SleeperActual,
     SleeperProjection,
@@ -85,11 +87,43 @@ CREATE TABLE IF NOT EXISTS waiver_bids (
     drops_json TEXT NOT NULL,
     recorded_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS fantasypros_experts (
+    id INTEGER PRIMARY KEY,
+    season INTEGER NOT NULL,
+    week INTEGER NOT NULL,
+    position TEXT NOT NULL,
+    scoring TEXT NOT NULL,
+    expert_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    site TEXT,
+    accuracy_rank INTEGER,
+    rankings_url TEXT,
+    recorded_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS fantasypros_ranks (
+    id INTEGER PRIMARY KEY,
+    season INTEGER NOT NULL,
+    week INTEGER NOT NULL,
+    position TEXT NOT NULL,
+    scoring TEXT NOT NULL,
+    expert_id TEXT NOT NULL,
+    expert_name TEXT NOT NULL,
+    accuracy_rank INTEGER NOT NULL,
+    player_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    team TEXT,
+    opponent TEXT,
+    rank INTEGER NOT NULL,
+    ecr INTEGER,
+    recorded_at TEXT NOT NULL
+);
 """
 
 
 class RecordStore:
-    """Append-only store for the five detail record types."""
+    """Append-only store for recorded details."""
 
     def __init__(self, path: str | Path = ":memory:") -> None:
         self.path = str(path)
@@ -170,6 +204,57 @@ class RecordStore:
             "INSERT INTO fantasypros_projections "
             "(season, week, position, player_id, name, team, scoring, stats_json, recorded_at) "
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            rows,
+        )
+
+    def add_fantasypros_experts(self, records: Iterable[FantasyProsExpert]) -> None:
+        rows = [
+            (
+                record.season,
+                record.week,
+                record.position,
+                record.scoring,
+                record.expert_id,
+                record.name,
+                record.site,
+                record.accuracy_rank,
+                record.rankings_url,
+                _stamp(record.recorded_at),
+            )
+            for record in records
+        ]
+        self._insert(
+            "INSERT INTO fantasypros_experts "
+            "(season, week, position, scoring, expert_id, name, site, accuracy_rank, "
+            "rankings_url, recorded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            rows,
+        )
+
+    def add_fantasypros_ranks(self, records: Iterable[FantasyProsRank]) -> None:
+        rows = [
+            (
+                record.season,
+                record.week,
+                record.position,
+                record.scoring,
+                record.expert_id,
+                record.expert_name,
+                record.accuracy_rank,
+                record.player_id,
+                record.name,
+                record.team,
+                record.opponent,
+                record.rank,
+                record.ecr,
+                _stamp(record.recorded_at),
+            )
+            for record in records
+        ]
+        self._insert(
+            "INSERT INTO fantasypros_ranks "
+            "(season, week, position, scoring, expert_id, expert_name, accuracy_rank, "
+            "player_id, name, team, opponent, rank, ecr, recorded_at) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             rows,
         )
 
@@ -304,6 +389,95 @@ class RecordStore:
                 team=row["team"],
                 scoring=row["scoring"],
                 stats=freeze_stats(_load_stats(row["stats_json"])),
+                recorded_at=_parse_stamp(row["recorded_at"]),
+            )
+            for row in rows
+        ]
+
+    def fantasypros_experts(
+        self,
+        season: int,
+        week: int,
+        *,
+        position: str | None = None,
+        scoring: str | None = None,
+        history: bool = False,
+    ) -> list[FantasyProsExpert]:
+        clauses = ["season = ?", "week = ?"]
+        params: list[Any] = [season, week]
+        if position is not None:
+            clauses.append("position = ?")
+            params.append(position)
+        if scoring is not None:
+            clauses.append("scoring = ?")
+            params.append(scoring)
+        sql = (
+            "SELECT season, week, position, scoring, expert_id, name, site, accuracy_rank, "
+            "rankings_url, recorded_at, id FROM fantasypros_experts WHERE "
+            + " AND ".join(clauses)
+        )
+        rows = self._select(
+            sql, params, history=history, group=("position", "scoring", "expert_id")
+        )
+        return [
+            FantasyProsExpert(
+                season=row["season"],
+                week=row["week"],
+                position=row["position"],
+                scoring=row["scoring"],
+                expert_id=row["expert_id"],
+                name=row["name"],
+                site=row["site"],
+                accuracy_rank=row["accuracy_rank"],
+                rankings_url=row["rankings_url"],
+                recorded_at=_parse_stamp(row["recorded_at"]),
+            )
+            for row in rows
+        ]
+
+    def fantasypros_ranks(
+        self,
+        season: int,
+        week: int,
+        *,
+        position: str | None = None,
+        scoring: str | None = None,
+        history: bool = False,
+    ) -> list[FantasyProsRank]:
+        clauses = ["season = ?", "week = ?"]
+        params: list[Any] = [season, week]
+        if position is not None:
+            clauses.append("position = ?")
+            params.append(position)
+        if scoring is not None:
+            clauses.append("scoring = ?")
+            params.append(scoring)
+        sql = (
+            "SELECT season, week, position, scoring, expert_id, expert_name, accuracy_rank, "
+            "player_id, name, team, opponent, rank, ecr, recorded_at, id "
+            "FROM fantasypros_ranks WHERE " + " AND ".join(clauses)
+        )
+        rows = self._select(
+            sql,
+            params,
+            history=history,
+            group=("position", "scoring", "expert_id", "player_id"),
+        )
+        return [
+            FantasyProsRank(
+                season=row["season"],
+                week=row["week"],
+                position=row["position"],
+                scoring=row["scoring"],
+                expert_id=row["expert_id"],
+                expert_name=row["expert_name"],
+                accuracy_rank=row["accuracy_rank"],
+                player_id=row["player_id"],
+                name=row["name"],
+                team=row["team"],
+                opponent=row["opponent"],
+                rank=row["rank"],
+                ecr=row["ecr"],
                 recorded_at=_parse_stamp(row["recorded_at"]),
             )
             for row in rows

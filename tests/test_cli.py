@@ -71,6 +71,7 @@ class CliTests(unittest.TestCase):
         self.assertEqual(code, 2)
         help_text = stdout.getvalue()
         self.assertIn("sleeper-actuals", help_text)
+        self.assertIn("fantasypros-ranks", help_text)
         self.assertIn("waiver-bids", help_text)
         self.assertNotIn("lineup", help_text)
 

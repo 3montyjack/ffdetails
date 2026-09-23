@@ -59,6 +59,44 @@ class FantasyProsProjection:
 
 
 @dataclass(frozen=True)
+class FantasyProsExpert:
+    """One expert listed on a FantasyPros weekly rankings page."""
+
+    season: int
+    week: int
+    position: str
+    scoring: str
+    expert_id: str
+    name: str
+    site: str | None
+    accuracy_rank: int | None
+    rankings_url: str | None
+    recorded_at: datetime
+    source: str = "fantasypros"
+
+
+@dataclass(frozen=True)
+class FantasyProsRank:
+    """One player's rank on a published FantasyPros expert board."""
+
+    season: int
+    week: int
+    position: str
+    scoring: str
+    expert_id: str
+    expert_name: str
+    accuracy_rank: int
+    player_id: str
+    name: str
+    team: str | None
+    opponent: str | None
+    rank: int
+    ecr: int | None
+    recorded_at: datetime
+    source: str = "fantasypros"
+
+
+@dataclass(frozen=True)
 class InjuryTag:
     """An injury label published for a player."""
 

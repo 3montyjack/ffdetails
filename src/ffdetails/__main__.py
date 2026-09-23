@@ -58,6 +58,19 @@ def build_parser() -> argparse.ArgumentParser:
         help="comma-separated positions",
     )
 
+    ranks = sub.add_parser(
+        "fantasypros-ranks",
+        help="record the public weekly board of the best in-season ranker at each position",
+    )
+    ranks.add_argument("--season", type=int, required=True)
+    ranks.add_argument("--week", type=int, required=True)
+    ranks.add_argument("--scoring", default="HALF", choices=["STD", "HALF", "PPR"])
+    ranks.add_argument(
+        "--positions",
+        default="QB,RB,WR,TE,K,DST",
+        help="comma-separated positions",
+    )
+
     sub.add_parser("injury-tags", help="record Sleeper injury tags")
 
     bids = sub.add_parser("waiver-bids", help="record Sleeper waiver claim bids")
@@ -91,6 +104,11 @@ def run(args: argparse.Namespace, *, recorder: Recorder | None = None) -> int:
             positions = tuple(part.strip() for part in args.positions.split(",") if part.strip())
             records = recorder.record_fantasypros_projections(
                 args.season, week, positions=positions, scoring=args.scoring
+            )
+        elif args.command == "fantasypros-ranks":
+            positions = tuple(part.strip() for part in args.positions.split(",") if part.strip())
+            records = recorder.record_fantasypros_ranks(
+                args.season, args.week, positions=positions, scoring=args.scoring
             )
         elif args.command == "injury-tags":
             records = recorder.record_injury_tags()
