@@ -70,6 +70,30 @@ def build_parser() -> argparse.ArgumentParser:
         default="QB,RB,WR,TE,K,DST",
         help="comma-separated positions",
     )
+    ranks.add_argument(
+        "--per-position",
+        type=int,
+        default=1,
+        help="public boards to keep at each position after accuracy-window leaders",
+    )
+    ranks.add_argument(
+        "--through-week",
+        type=int,
+        help="also record accuracy for the season and each week through this one",
+    )
+
+    accuracy = sub.add_parser(
+        "fantasypros-accuracy",
+        help="record FantasyPros accuracy for the season or one week",
+    )
+    accuracy.add_argument("--season", type=int, required=True)
+    window = accuracy.add_mutually_exclusive_group()
+    window.add_argument("--week", type=int, help="one completed week; omit for season to date")
+    window.add_argument(
+        "--through-week",
+        type=int,
+        help="season to date plus each week through this one",
+    )
 
     sub.add_parser("injury-tags", help="record Sleeper injury tags")
 
@@ -108,7 +132,18 @@ def run(args: argparse.Namespace, *, recorder: Recorder | None = None) -> int:
         elif args.command == "fantasypros-ranks":
             positions = tuple(part.strip() for part in args.positions.split(",") if part.strip())
             records = recorder.record_fantasypros_ranks(
-                args.season, args.week, positions=positions, scoring=args.scoring
+                args.season,
+                args.week,
+                positions=positions,
+                scoring=args.scoring,
+                per_position=args.per_position,
+                through_week=args.through_week,
+            )
+        elif args.command == "fantasypros-accuracy":
+            records = recorder.record_fantasypros_accuracy(
+                args.season,
+                args.week,
+                through_week=args.through_week,
             )
         elif args.command == "injury-tags":
             records = recorder.record_injury_tags()

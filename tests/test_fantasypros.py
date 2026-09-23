@@ -9,13 +9,17 @@ from ffdetails.errors import ParseError
 from ffdetails.fantasypros import (
     choose_positional_experts,
     hybrid_board,
+    parse_accuracy,
     parse_expert_ranks,
     parse_projections,
     parse_rank_experts,
+    positional_sources,
     projections_url,
+    rank_spreads,
     rankings_url,
+    select_boards,
 )
-from ffdetails.records import FantasyProsExpert, FantasyProsRank
+from ffdetails.records import FantasyProsAccuracy, FantasyProsExpert, FantasyProsRank
 from ffdetails.recorder import Recorder
 from ffdetails.store import RecordStore
 
@@ -423,6 +427,136 @@ class FantasyProsRankTests(unittest.TestCase):
         from ffdetails.fantasypros import FantasyProsSource
 
         return FantasyProsSource(client)  # type: ignore[arg-type]
+
+
+YTD_ACCURACY = """
+<script>
+window.FP.reportConfig = {"subtitle":"2026 Season to Date Accuracy Rankings","filters":[
+  {"id":"year","selected":"_2026"},
+  {"id":"week","selected":"ytd"}
+],"table":{"rows":[
+  {"id":7254,"rank":1,"expert":{"label":"Pete Nova - Player Profiler"},"qb":1,"rb":4,"wr":41,"te":174,"k":15,"dst":4,"idp":null},
+  {"id":1576,"rank":9,"expert":{"label":"Jacob Gibbs - SportsLine"},"qb":59,"rb":2,"wr":19,"te":159,"k":null,"dst":null,"idp":null}
+]}};
+</script>
+"""
+
+WEEK_TWO_ACCURACY = """
+<script>
+window.FP.reportConfig = {"subtitle":"Week 2 Accuracy Rankings","filters":[
+  {"id":"year","selected":"_2026"},
+  {"id":"week","selected":"_2"}
+],"table":{"rows":[
+  {"id":241,"rank":1,"expert":{"label":"Muntradamus - Beast Dome"},"qb":1,"rb":178,"wr":1,"te":31,"k":69,"dst":27,"idp":null}
+]}};
+</script>
+"""
+
+
+def _accuracy(**overrides: object) -> FantasyProsAccuracy:
+    payload = dict(
+        season=2026,
+        week=None,
+        expert_id="7254",
+        name="Pete Nova",
+        site="Player Profiler",
+        overall_rank=1,
+        qb=1,
+        rb=4,
+        wr=41,
+        te=174,
+        k=15,
+        dst=4,
+        recorded_at=STAMP,
+    )
+    payload.update(overrides)
+    return FantasyProsAccuracy(**payload)  # type: ignore[arg-type]
+
+
+class AccuracyWindowTests(unittest.TestCase):
+    def test_season_row_splits_the_published_label(self) -> None:
+        rows = parse_accuracy(YTD_ACCURACY, season=2026, week=None, recorded_at=STAMP)
+        self.assertEqual(rows[0].name, "Pete Nova")
+        self.assertEqual(rows[0].site, "Player Profiler")
+        self.assertIsNone(rows[0].week)
+        self.assertEqual(rows[0].qb, 1)
+        self.assertIsNone(rows[1].k)
+        self.assertEqual(rows[1].rb, 2)
+
+    def test_wrong_week_is_rejected(self) -> None:
+        with self.assertRaises(ParseError) as caught:
+            parse_accuracy(WEEK_TWO_ACCURACY, season=2026, week=3, recorded_at=STAMP)
+        self.assertIn("no week 3", str(caught.exception))
+
+    def test_window_leader_without_a_board_stays_visible(self) -> None:
+        ytd = parse_accuracy(YTD_ACCURACY, season=2026, week=None, recorded_at=STAMP)
+        week_two = parse_accuracy(WEEK_TWO_ACCURACY, season=2026, week=2, recorded_at=STAMP)
+        directory = [
+            _expert(expert_id="7254", name="Pete Nova", accuracy_rank=1, rankings_url="https://example.test/nova"),
+            _expert(expert_id="9", name="Other", accuracy_rank=4, rankings_url="https://example.test/other"),
+        ]
+        sources = positional_sources([*ytd, *week_two], directory)
+        qb = [source for source in sources if source.position == "QB"]
+        origins = [(source.week, source.expert_id, source.origin, source.rankings_url) for source in qb]
+        self.assertIn((None, "7254", "accuracy", "https://example.test/nova"), origins)
+        self.assertIn((2, "241", "accuracy", None), origins)
+        self.assertIn((None, "7254", "rankings", "https://example.test/nova"), origins)
+
+    def test_select_boards_keeps_window_leaders_and_fills_the_rest(self) -> None:
+        directory = [
+            _expert(expert_id="7254", name="Pete Nova", accuracy_rank=1, rankings_url="https://example.test/nova"),
+            _expert(expert_id="9", name="Other", accuracy_rank=4, rankings_url="https://example.test/other"),
+            _expert(expert_id="3", name="Third", accuracy_rank=2, rankings_url="https://example.test/third"),
+        ]
+        week_two = _accuracy(week=2, expert_id="9", name="Other", overall_rank=4, qb=1)
+        sources = positional_sources([week_two], directory)
+        chosen = select_boards(directory, sources, per_position=2, positions=("QB",))
+        self.assertEqual([expert.expert_id for expert in chosen], ["9", "7254"])
+
+    def test_rank_spreads_measure_disagreement(self) -> None:
+        first = FantasyProsRank(
+            season=2026, week=3, position="WR", scoring="HALF", expert_id="1", expert_name="A",
+            accuracy_rank=1, player_id="10", name="Puka Nacua", team="LAR", opponent=None,
+            rank=4, ecr=25, recorded_at=STAMP,
+        )
+        second = FantasyProsRank(
+            season=2026, week=3, position="WR", scoring="HALF", expert_id="2", expert_name="B",
+            accuracy_rank=4, player_id="10", name="Puka Nacua", team="LAR", opponent=None,
+            rank=18, ecr=25, recorded_at=STAMP,
+        )
+        spreads = rank_spreads([second, first])
+        self.assertEqual(spreads[0].best, 4)
+        self.assertEqual(spreads[0].worst, 18)
+        self.assertEqual(spreads[0].spread, 14)
+        self.assertEqual(spreads[0].ranks[0][2], 4)
+        self.assertEqual(spreads[0].ecr, 25)
+
+    def test_accuracy_windows_stop_when_a_week_is_unpublished(self) -> None:
+        class MapClient:
+            def __init__(self) -> None:
+                self.urls: list[str] = []
+
+            def get_json(self, url: str) -> object:
+                raise AssertionError(url)
+
+            def get_text(self, url: str) -> str:
+                self.urls.append(url)
+                if "week=" not in url:
+                    return YTD_ACCURACY
+                if "week=1" in url:
+                    return WEEK_TWO_ACCURACY.replace('"_2"', '"_1"').replace("Week 2", "Week 1")
+                if "week=2" in url:
+                    return YTD_ACCURACY
+                raise AssertionError(url)
+
+        from ffdetails.fantasypros import FantasyProsSource
+
+        source = FantasyProsSource(MapClient())  # type: ignore[arg-type]
+        rows = source.accuracy_windows(2026, 3, recorded_at=STAMP)
+        self.assertEqual({row.week for row in rows}, {None, 1})
+        self.assertTrue(any("week=1" in url for url in source.http.urls))
+        self.assertTrue(any("week=2" in url for url in source.http.urls))
+        self.assertFalse(any("week=3" in url for url in source.http.urls))
 
 
 if __name__ == "__main__":

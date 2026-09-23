@@ -5,7 +5,8 @@
 - Sleeper weekly actuals
 - Sleeper weekly projections
 - FantasyPros consensus projections
-- FantasyPros weekly ranks from one public expert board per position
+- FantasyPros weekly ranks from the public expert boards worth comparing
+- FantasyPros accuracy, season to date and week by week
 - Sleeper injury tags
 - Sleeper waiver claim bids
 
@@ -28,7 +29,8 @@ ffdetails sleeper-actuals --season 2026 --week 1
 ffdetails sleeper-projections --season 2026 --week 3
 ffdetails fantasypros-projections --season 2026 --week 3 --scoring HALF
 ffdetails fantasypros-projections --season 2026 --season-long --scoring PPR
-ffdetails fantasypros-ranks --season 2026 --week 3 --scoring HALF
+ffdetails fantasypros-accuracy --season 2026 --through-week 2
+ffdetails fantasypros-ranks --season 2026 --week 3 --scoring HALF --through-week 2 --per-position 3
 ffdetails injury-tags
 ffdetails waiver-bids --league-id LEAGUE_ID --season 2026 --week 3
 ```
@@ -52,22 +54,28 @@ FantasyPros consensus pages are read as HTML. The recorder stores every player r
 
 `fpts` is the fantasy-point column on that page. When the page includes a more precise sort value, that value is stored.
 
-`fantasypros-ranks` records two snapshots from the weekly rankings pages. The expert directory is every ranker listed for that position, including in-season positional accuracy and the public board URL when FantasyPros publishes one. The rank rows are the player order from one board per position: the expert with the best in-season positional accuracy who still publishes a board. Experts without a public board are stored in the directory and left out of the rank rows. Equal accuracy ranks keep the lower expert id.
+`fantasypros-accuracy` records the public accuracy report. With no week, that is season to date. `--week 2` is one completed week. `--through-week 2` records the season and each published week through week 2, and stops when FantasyPros has not published a later week. The anonymous report is a short overall list. Each row has an overall rank and a positional rank. A positional rank above 1 means the leader at that position is outside the published list.
 
-RB, WR, and TE follow `--scoring` (`HALF` by default, or `STD` / `PPR`). QB, K, and DST stay on the standard board, because FantasyPros publishes those positions once. `hybrid_board` applies that same split when it reads a snapshot back.
+`fantasypros-ranks` records the expert directory and the public boards used to compare sources. The directory is every ranker listed for that position, including in-season positional accuracy and the public board URL when FantasyPros publishes one. `--through-week` records the accuracy windows above and keeps every window leader who still publishes a board. `--per-position` fills any remaining slots from the directory, best in-season positional rank first. The default is one board, the best public in-season ranker. Equal accuracy ranks keep the lower expert id. Experts without a public board stay in the directory and in the accuracy rows, and they are left out of the rank rows.
+
+RB, WR, and TE follow `--scoring` (`HALF` by default, or `STD` / `PPR`). QB, K, and DST stay on the standard board, because FantasyPros publishes those positions once. `hybrid_board` still returns that single best public board. `positional_sources` is the week-by-week leader list, including leaders with no public board. `rank_spreads` lines each player up across the boards that were recorded.
 
 ## Library
 
 ```python
-from ffdetails import RecordStore, Recorder, hybrid_board
+from ffdetails import RecordStore, Recorder, hybrid_board, positional_sources, rank_spreads
 
 with RecordStore("ffdetails.sqlite") as store:
     recorder = Recorder(store)
     recorder.record_sleeper_actuals(2026, 1)
-    recorder.record_fantasypros_ranks(2026, 3)
+    recorder.record_fantasypros_ranks(2026, 3, per_position=3, through_week=2)
     latest = store.sleeper_actuals(2026, 1)
     history = store.sleeper_actuals(2026, 1, history=True)
-    board = hybrid_board(store.fantasypros_experts(2026, 3), store.fantasypros_ranks(2026, 3))
+    experts = store.fantasypros_experts(2026, 3)
+    ranks = store.fantasypros_ranks(2026, 3)
+    board = hybrid_board(experts, ranks)
+    sources = positional_sources(store.fantasypros_accuracy(2026, every_window=True), experts)
+    spreads = rank_spreads(ranks)
 ```
 
 `SleeperSource` and `FantasyProsSource` accept any object with `get_json` and `get_text`, so tests can supply saved payloads.

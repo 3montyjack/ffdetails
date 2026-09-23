@@ -72,6 +72,7 @@ class CliTests(unittest.TestCase):
         help_text = stdout.getvalue()
         self.assertIn("sleeper-actuals", help_text)
         self.assertIn("fantasypros-ranks", help_text)
+        self.assertIn("fantasypros-accuracy", help_text)
         self.assertIn("waiver-bids", help_text)
         self.assertNotIn("lineup", help_text)
 

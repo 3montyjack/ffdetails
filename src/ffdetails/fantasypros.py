@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+from dataclasses import dataclass
 from datetime import datetime
 from html import unescape
 from html.parser import HTMLParser
@@ -13,6 +14,7 @@ from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 from ffdetails.errors import ParseError
 from ffdetails.http import UrllibClient
 from ffdetails.records import (
+    FantasyProsAccuracy,
     FantasyProsExpert,
     FantasyProsProjection,
     FantasyProsRank,
@@ -22,6 +24,7 @@ from ffdetails.timeutil import as_utc
 
 FANTASYPROS_PROJECTIONS = "https://www.fantasypros.com/nfl/projections"
 FANTASYPROS_RANKINGS = "https://www.fantasypros.com/nfl/rankings"
+FANTASYPROS_ACCURACY = "https://www.fantasypros.com/nfl/accuracy/"
 FANTASYPROS_ORIGIN = "https://www.fantasypros.com"
 SCORING = ("STD", "HALF", "PPR")
 POSITIONS = ("QB", "RB", "WR", "TE", "K", "DST")
@@ -123,6 +126,48 @@ class FantasyProsSource:
             )
         return records
 
+    def accuracy(
+        self,
+        season: int,
+        week: int | None = None,
+        *,
+        recorded_at: datetime | None = None,
+    ) -> list[FantasyProsAccuracy]:
+        """Fetch one accuracy window. ``week=None`` is season to date."""
+        stamp = as_utc(recorded_at)
+        html = self.http.get_text(accuracy_url(season, week))
+        try:
+            return parse_accuracy(html, season=season, week=week, recorded_at=stamp)
+        except ParseError as exc:
+            if f"not for {season}" not in str(exc):
+                raise
+        html = self.http.get_text(accuracy_url(season, week, year=True))
+        return parse_accuracy(html, season=season, week=week, recorded_at=stamp)
+
+    def accuracy_windows(
+        self,
+        season: int,
+        through_week: int,
+        *,
+        recorded_at: datetime | None = None,
+    ) -> list[FantasyProsAccuracy]:
+        """Fetch season-to-date accuracy and each completed week through ``through_week``.
+
+        Stops at the first week FantasyPros has not published. Later weeks are
+        left out instead of repeating the previous week.
+        """
+        stamp = as_utc(recorded_at)
+        _require_through_week(through_week)
+        rows = list(self.accuracy(season, None, recorded_at=stamp))
+        for week in range(1, through_week + 1):
+            try:
+                rows.extend(self.accuracy(season, week, recorded_at=stamp))
+            except ParseError as exc:
+                if f"no week {week}" in str(exc):
+                    break
+                raise
+        return rows
+
     def positional_ranks(
         self,
         season: int,
@@ -130,12 +175,16 @@ class FantasyProsSource:
         *,
         positions: tuple[str, ...] | list[str] = POSITIONS,
         scoring: str = "HALF",
+        per_position: int = 1,
+        accuracy: Sequence[FantasyProsAccuracy] | None = None,
         recorded_at: datetime | None = None,
     ) -> tuple[list[FantasyProsExpert], list[FantasyProsRank]]:
-        """Fetch expert directories and the chosen public board at each position.
+        """Fetch expert directories and the public boards used for comparison.
 
         RB, WR, and TE use the requested scoring. QB, K, and DST stay on the
-        standard board FantasyPros publishes for those positions.
+        standard board FantasyPros publishes for those positions. ``per_position``
+        is how many public boards to keep after any accuracy-window leaders that
+        publish a board. The default keeps the single best in-season public board.
         """
         stamp = as_utc(recorded_at)
         scoring_name = normalize_scoring(scoring)
@@ -154,7 +203,13 @@ class FantasyProsSource:
                     recorded_at=stamp,
                 )
             )
-        chosen = choose_positional_experts(experts, positions=chosen_positions)
+        sources = positional_sources(accuracy or [], experts)
+        chosen = select_boards(
+            experts,
+            sources,
+            per_position=per_position,
+            positions=chosen_positions,
+        )
         ranks: list[FantasyProsRank] = []
         for expert in chosen:
             if not expert.rankings_url:
@@ -548,6 +603,239 @@ def choose_positional_experts(
     return tuple(chosen[position] for position in requested)
 
 
+@dataclass(frozen=True)
+class PositionalSource:
+    """Best published accuracy rank at one position for one window.
+
+    ``week`` is None for season-to-date. ``rankings_url`` is set when that
+    expert publishes a board on the weekly rankings page.
+    """
+
+    season: int
+    week: int | None
+    position: str
+    expert_id: str
+    name: str
+    site: str | None
+    overall_rank: int
+    positional_rank: int
+    rankings_url: str | None
+    origin: str
+
+
+@dataclass(frozen=True)
+class RankSpread:
+    """One player's ranks across the boards recorded for a position."""
+
+    position: str
+    player_id: str
+    name: str
+    team: str | None
+    ranks: tuple[tuple[str, str, int], ...]
+    best: int
+    worst: int
+    ecr: int | None
+
+    @property
+    def spread(self) -> int:
+        return self.worst - self.best
+
+
+def accuracy_url(season: int, week: int | None = None, *, year: bool = False) -> str:
+    """Accuracy report URL.
+
+    The current season-to-date page is the bare report. Adding ``year`` for that
+    same season returns an empty table, so the year is sent only as a fallback
+    or when a week from another season is requested.
+    """
+    _require_season(season)
+    query: dict[str, str] = {}
+    if year:
+        query["year"] = str(season)
+    if week is not None:
+        query["week"] = _week_query(week)
+    if not query:
+        return FANTASYPROS_ACCURACY
+    return f"{FANTASYPROS_ACCURACY}?{urlencode(query)}"
+
+
+def parse_accuracy(
+    html: str,
+    *,
+    season: int,
+    week: int | None,
+    recorded_at: datetime,
+) -> list[FantasyProsAccuracy]:
+    _require_season(season)
+    if week is not None:
+        _week_query(week)
+    payload = _assigned_object(html, "window.FP.reportConfig = ")
+    _require_accuracy_window(payload, season=season, week=week)
+    raw_rows = (payload.get("table") or {}).get("rows") if isinstance(payload.get("table"), dict) else None
+    if not isinstance(raw_rows, list) or not raw_rows:
+        raise ParseError("FantasyPros accuracy page has no expert rows")
+    stamp = as_utc(recorded_at)
+    records: list[FantasyProsAccuracy] = []
+    for raw in raw_rows:
+        record = _accuracy_record(raw, season=season, week=week, recorded_at=stamp)
+        if record is not None:
+            records.append(record)
+    if not records:
+        raise ParseError("FantasyPros accuracy page has no expert rows")
+    return records
+
+
+def positional_sources(
+    accuracy: Sequence[FantasyProsAccuracy],
+    experts: Sequence[FantasyProsExpert],
+) -> list[PositionalSource]:
+    """Best expert in each accuracy window, joined to a public board when one exists.
+
+    The public accuracy report is a short overall list. A positional rank above 1
+    means the positional leader that window is outside that list. The rankings
+    directory adds its own in-season leader, which can sit outside the overall list.
+    """
+    directory: dict[tuple[str, str], FantasyProsExpert] = {}
+    for expert in experts:
+        directory[(expert.position, expert.expert_id)] = expert
+    sources: list[PositionalSource] = []
+    windows: dict[tuple[int, int | None], list[FantasyProsAccuracy]] = {}
+    for row in accuracy:
+        windows.setdefault((row.season, row.week), []).append(row)
+    for season, week in sorted(windows, key=_window_sort):
+        group = windows[(season, week)]
+        for position in POSITIONS:
+            ranked = [
+                (getattr(row, position.lower()), row)
+                for row in group
+                if getattr(row, position.lower()) is not None
+            ]
+            if not ranked:
+                continue
+            ranked.sort(key=lambda item: (item[0], _numeric_id(item[1].expert_id), item[1].expert_id))
+            positional_rank, row = ranked[0]
+            match = directory.get((position, row.expert_id))
+            sources.append(
+                PositionalSource(
+                    season=season,
+                    week=week,
+                    position=position,
+                    expert_id=row.expert_id,
+                    name=row.name,
+                    site=row.site,
+                    overall_rank=row.overall_rank,
+                    positional_rank=positional_rank,
+                    rankings_url=match.rankings_url if match is not None else None,
+                    origin="accuracy",
+                )
+            )
+    for position in POSITIONS:
+        present = [expert for expert in experts if expert.position == position]
+        if not present:
+            continue
+        try:
+            leader = choose_positional_experts(present, positions=(position,))[0]
+        except ParseError:
+            continue
+        if leader.accuracy_rank is None:
+            continue
+        sources.append(
+            PositionalSource(
+                season=leader.season,
+                week=None,
+                position=position,
+                expert_id=leader.expert_id,
+                name=leader.name,
+                site=leader.site,
+                overall_rank=leader.accuracy_rank,
+                positional_rank=leader.accuracy_rank,
+                rankings_url=leader.rankings_url,
+                origin="rankings",
+            )
+        )
+    return sources
+
+
+def select_boards(
+    experts: Sequence[FantasyProsExpert],
+    sources: Sequence[PositionalSource],
+    *,
+    per_position: int = 1,
+    positions: Sequence[str] | None = None,
+) -> tuple[FantasyProsExpert, ...]:
+    """Public boards to pull for a weekly comparison.
+
+    Accuracy-window leaders with a published board are always included. Remaining
+    slots up to ``per_position`` are filled from the in-season rankings directory.
+    """
+    if isinstance(per_position, bool) or not isinstance(per_position, int) or per_position < 1:
+        raise ParseError("per_position must be an integer >= 1")
+    if positions is None:
+        requested = tuple(dict.fromkeys(expert.position for expert in experts))
+    else:
+        requested = _normalize_positions(tuple(positions))
+    by_position: dict[str, list[FantasyProsExpert]] = {}
+    lookup: dict[tuple[str, str], FantasyProsExpert] = {}
+    for expert in experts:
+        if expert.position not in requested:
+            continue
+        if expert.rankings_url and expert.accuracy_rank is not None:
+            by_position.setdefault(expert.position, []).append(expert)
+            lookup[(expert.position, expert.expert_id)] = expert
+    for position in by_position:
+        by_position[position].sort(key=_expert_key)
+    chosen: dict[str, list[FantasyProsExpert]] = {}
+    for source in sources:
+        if source.position not in requested or not source.rankings_url:
+            continue
+        match = lookup.get((source.position, source.expert_id))
+        if match is None:
+            continue
+        bucket = chosen.setdefault(source.position, [])
+        if all(expert.expert_id != match.expert_id for expert in bucket):
+            bucket.append(match)
+    for position in requested:
+        bucket = chosen.setdefault(position, [])
+        for expert in by_position.get(position, []):
+            if len(bucket) >= per_position:
+                break
+            if all(current.expert_id != expert.expert_id for current in bucket):
+                bucket.append(expert)
+    missing = [position for position in requested if not chosen.get(position)]
+    if missing:
+        names = ", ".join(missing)
+        raise ParseError(f"FantasyPros has no public in-season ranker for {names}")
+    return tuple(expert for position in requested for expert in chosen[position])
+
+
+def rank_spreads(ranks: Sequence[FantasyProsRank]) -> list[RankSpread]:
+    """Line up each player across the recorded boards. Spread is worst minus best."""
+    grouped: dict[tuple[str, str], list[FantasyProsRank]] = {}
+    for rank in ranks:
+        grouped.setdefault((rank.position, rank.player_id), []).append(rank)
+    spreads: list[RankSpread] = []
+    for position, player_id in grouped:
+        rows = grouped[(position, player_id)]
+        ordered = sorted(rows, key=lambda row: (row.rank, _numeric_id(row.expert_id), row.expert_id))
+        values = tuple((row.expert_id, row.expert_name, row.rank) for row in ordered)
+        ecr_values = [row.ecr for row in ordered if row.ecr is not None]
+        spreads.append(
+            RankSpread(
+                position=position,
+                player_id=player_id,
+                name=ordered[0].name,
+                team=ordered[0].team,
+                ranks=values,
+                best=ordered[0].rank,
+                worst=ordered[-1].rank,
+                ecr=min(ecr_values) if ecr_values else None,
+            )
+        )
+    order = {position: index for index, position in enumerate(POSITIONS)}
+    spreads.sort(key=lambda row: (order.get(row.position, len(order)), row.best, row.player_id))
+    return spreads
+
+
 def hybrid_board(
     experts: Sequence[FantasyProsExpert],
     ranks: Sequence[FantasyProsRank],
@@ -577,9 +865,98 @@ def hybrid_board(
 
 
 def _expert_key(expert: FantasyProsExpert) -> tuple[int, int, str]:
-    expert_id = expert.expert_id
-    numeric = int(expert_id) if expert_id.isdigit() else 10**12
-    return (expert.accuracy_rank or 10**9, numeric, expert_id)
+    return (expert.accuracy_rank or 10**9, _numeric_id(expert.expert_id), expert.expert_id)
+
+
+def _numeric_id(expert_id: str) -> int:
+    return int(expert_id) if expert_id.isdigit() else 10**12
+
+
+def _window_sort(key: tuple[int, int | None]) -> tuple[int, int]:
+    season, week = key
+    return (season, 0 if week is None else week)
+
+
+def _require_through_week(week: int) -> None:
+    if isinstance(week, bool) or not isinstance(week, int) or week < 1:
+        raise ParseError("through_week must be an integer >= 1")
+
+
+def _require_accuracy_window(payload: dict[str, Any], *, season: int, week: int | None) -> None:
+    selected_year = _filter_value(payload, "year")
+    selected_week = _filter_value(payload, "week")
+    if selected_year != str(season):
+        raise ParseError(f"FantasyPros accuracy is not for {season}")
+    if week is None:
+        if selected_week != "ytd":
+            raise ParseError("FantasyPros accuracy is not season to date")
+        return
+    if selected_week != str(week):
+        raise ParseError(f"FantasyPros accuracy has no week {week}")
+
+
+def _filter_value(payload: dict[str, Any], filter_id: str) -> str:
+    filters = payload.get("filters")
+    if not isinstance(filters, list):
+        raise ParseError("FantasyPros accuracy page is missing filters")
+    for item in filters:
+        if not isinstance(item, dict) or item.get("id") != filter_id:
+            continue
+        selected = item.get("selected")
+        if not isinstance(selected, str) or not selected:
+            break
+        if selected.startswith("_") and selected[1:].isdigit():
+            return selected[1:]
+        return selected
+    raise ParseError(f"FantasyPros accuracy page is missing the {filter_id} filter")
+
+
+def _accuracy_record(
+    raw: Any,
+    *,
+    season: int,
+    week: int | None,
+    recorded_at: datetime,
+) -> FantasyProsAccuracy | None:
+    if not isinstance(raw, dict):
+        return None
+    expert_id = raw.get("id")
+    expert = raw.get("expert")
+    if isinstance(expert_id, bool) or not isinstance(expert_id, (int, str)):
+        return None
+    expert_key = str(expert_id).strip()
+    if not expert_key or not isinstance(expert, dict):
+        return None
+    label = expert.get("label")
+    if not isinstance(label, str) or not label.strip():
+        return None
+    name, site = _split_label(label)
+    overall = _accuracy_rank(raw.get("rank"))
+    if overall is None:
+        return None
+    return FantasyProsAccuracy(
+        season=season,
+        week=week,
+        expert_id=expert_key,
+        name=name,
+        site=site,
+        overall_rank=overall,
+        qb=_accuracy_rank(raw.get("qb")),
+        rb=_accuracy_rank(raw.get("rb")),
+        wr=_accuracy_rank(raw.get("wr")),
+        te=_accuracy_rank(raw.get("te")),
+        k=_accuracy_rank(raw.get("k")),
+        dst=_accuracy_rank(raw.get("dst")),
+        recorded_at=recorded_at,
+    )
+
+
+def _split_label(label: str) -> tuple[str, str | None]:
+    name, separator, site = label.strip().partition(" - ")
+    if not separator:
+        return label.strip(), None
+    site_name = site.strip() or None
+    return name.strip(), site_name
 
 
 def _require_season(season: int) -> None:

@@ -6,6 +6,7 @@ from datetime import datetime
 
 from ffdetails.fantasypros import POSITIONS, FantasyProsSource
 from ffdetails.records import (
+    FantasyProsAccuracy,
     FantasyProsProjection,
     FantasyProsRank,
     InjuryTag,
@@ -81,6 +82,23 @@ class Recorder:
         self.store.add_fantasypros_projections(records)
         return records
 
+    def record_fantasypros_accuracy(
+        self,
+        season: int,
+        week: int | None = None,
+        *,
+        through_week: int | None = None,
+        recorded_at: datetime | None = None,
+    ) -> list[FantasyProsAccuracy]:
+        if through_week is None:
+            records = self.fantasypros.accuracy(season, week, recorded_at=recorded_at)
+        else:
+            records = self.fantasypros.accuracy_windows(
+                season, through_week, recorded_at=recorded_at
+            )
+        self.store.add_fantasypros_accuracy(records)
+        return records
+
     def record_fantasypros_ranks(
         self,
         season: int,
@@ -88,13 +106,22 @@ class Recorder:
         *,
         positions: tuple[str, ...] | list[str] = POSITIONS,
         scoring: str = "HALF",
+        per_position: int = 1,
+        through_week: int | None = None,
         recorded_at: datetime | None = None,
     ) -> list[FantasyProsRank]:
+        accuracy = None
+        if through_week is not None:
+            accuracy = self.record_fantasypros_accuracy(
+                season, through_week=through_week, recorded_at=recorded_at
+            )
         experts, ranks = self.fantasypros.positional_ranks(
             season,
             week,
             positions=positions,
             scoring=scoring,
+            per_position=per_position,
+            accuracy=accuracy,
             recorded_at=recorded_at,
         )
         self.store.add_fantasypros_experts(experts)

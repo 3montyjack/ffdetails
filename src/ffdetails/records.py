@@ -97,6 +97,26 @@ class FantasyProsRank:
 
 
 @dataclass(frozen=True)
+class FantasyProsAccuracy:
+    """One expert's published FantasyPros accuracy rank for a week or the season."""
+
+    season: int
+    week: int | None
+    expert_id: str
+    name: str
+    site: str | None
+    overall_rank: int
+    qb: int | None
+    rb: int | None
+    wr: int | None
+    te: int | None
+    k: int | None
+    dst: int | None
+    recorded_at: datetime
+    source: str = "fantasypros"
+
+
+@dataclass(frozen=True)
 class InjuryTag:
     """An injury label published for a player."""
 

@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from ffdetails.records import (
+    FantasyProsAccuracy,
     FantasyProsExpert,
     FantasyProsProjection,
     FantasyProsRank,
@@ -85,6 +86,23 @@ CREATE TABLE IF NOT EXISTS waiver_bids (
     bid INTEGER NOT NULL,
     status TEXT NOT NULL,
     drops_json TEXT NOT NULL,
+    recorded_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS fantasypros_accuracy (
+    id INTEGER PRIMARY KEY,
+    season INTEGER NOT NULL,
+    week INTEGER,
+    expert_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    site TEXT,
+    overall_rank INTEGER NOT NULL,
+    qb INTEGER,
+    rb INTEGER,
+    wr INTEGER,
+    te INTEGER,
+    k INTEGER,
+    dst INTEGER,
     recorded_at TEXT NOT NULL
 );
 
@@ -204,6 +222,32 @@ class RecordStore:
             "INSERT INTO fantasypros_projections "
             "(season, week, position, player_id, name, team, scoring, stats_json, recorded_at) "
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            rows,
+        )
+
+    def add_fantasypros_accuracy(self, records: Iterable[FantasyProsAccuracy]) -> None:
+        rows = [
+            (
+                record.season,
+                record.week,
+                record.expert_id,
+                record.name,
+                record.site,
+                record.overall_rank,
+                record.qb,
+                record.rb,
+                record.wr,
+                record.te,
+                record.k,
+                record.dst,
+                _stamp(record.recorded_at),
+            )
+            for record in records
+        ]
+        self._insert(
+            "INSERT INTO fantasypros_accuracy "
+            "(season, week, expert_id, name, site, overall_rank, qb, rb, wr, te, k, dst, "
+            "recorded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             rows,
         )
 
@@ -394,6 +438,29 @@ class RecordStore:
             for row in rows
         ]
 
+    def fantasypros_accuracy(
+        self,
+        season: int,
+        week: int | None = None,
+        *,
+        every_window: bool = False,
+        history: bool = False,
+    ) -> list[FantasyProsAccuracy]:
+        clauses = ["season = ?"]
+        params: list[Any] = [season]
+        if not every_window:
+            if week is None:
+                clauses.append("week IS NULL")
+            else:
+                clauses.append("week = ?")
+                params.append(week)
+        sql = (
+            "SELECT season, week, expert_id, name, site, overall_rank, qb, rb, wr, te, k, "
+            "dst, recorded_at, id FROM fantasypros_accuracy WHERE " + " AND ".join(clauses)
+        )
+        rows = self._select(sql, params, history=history, group=("week", "expert_id"))
+        return [_accuracy_row(row) for row in rows]
+
     def fantasypros_experts(
         self,
         season: int,
@@ -563,6 +630,24 @@ class RecordStore:
             "ORDER BY matched.id"
         )
         return list(self._conn.execute(wrapped, params + params))
+
+
+def _accuracy_row(row: sqlite3.Row) -> FantasyProsAccuracy:
+    return FantasyProsAccuracy(
+        season=row["season"],
+        week=row["week"],
+        expert_id=row["expert_id"],
+        name=row["name"],
+        site=row["site"],
+        overall_rank=row["overall_rank"],
+        qb=row["qb"],
+        rb=row["rb"],
+        wr=row["wr"],
+        te=row["te"],
+        k=row["k"],
+        dst=row["dst"],
+        recorded_at=_parse_stamp(row["recorded_at"]),
+    )
 
 
 def _dump_stats(stats: Any) -> str:
