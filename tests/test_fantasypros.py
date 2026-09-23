@@ -298,6 +298,28 @@ class FantasyProsRankTests(unittest.TestCase):
         self.assertIsNone(ranks[1].ecr)
         self.assertEqual(ranks[1].name, "Brock Purdy")
 
+    def test_dst_board_uses_the_team_link(self) -> None:
+        html = """
+        <option value="/nfl/rankings/rudy.php?week=3&position=DST&scoring=STD" selected="selected">Week 3</option>
+        <table id="data">
+        <tbody>
+        <tr>
+        <td class="center">1</td>
+        <td class="player-label"><a href="/nfl/teams/seattle-defense.php">Seattle Seahawks</a></td>
+        <td class="center"> at  WAS</td>
+        <td class="center">1</td>
+        <td class="center">0</td>
+        </tr>
+        </tbody>
+        </table>
+        """
+        ranks = parse_expert_ranks(html, expert=_expert(position="DST", scoring="STD", name="Rudy Gamble"))
+        self.assertEqual(ranks[0].player_id, "seattle-defense")
+        self.assertEqual(ranks[0].name, "Seattle Seahawks")
+        self.assertIsNone(ranks[0].team)
+        self.assertEqual(ranks[0].opponent, "at WAS")
+        self.assertEqual(ranks[0].ecr, 1)
+
     def test_wrong_week_board_raises(self) -> None:
         html = BOARD_HTML.replace("week=3", "week=2")
         with self.assertRaises(ParseError):

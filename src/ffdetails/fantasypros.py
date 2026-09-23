@@ -706,19 +706,26 @@ def _selected_option_values(html: str) -> list[str]:
 
 
 def _board_row(cells: list[dict[str, Any]], *, expert: FantasyProsExpert) -> FantasyProsRank | None:
-    if len(cells) < 5:
+    if len(cells) < 4:
         return None
-    anchor = cells[1].get("anchor") or {}
-    class_name = str(anchor.get("class") or "")
-    match = _PLAYER_ID.search(class_name)
-    if match is None:
+    player_id, name = _player_identity(cells[1])
+    if player_id is None:
         return None
-    name = anchor.get("fp-player-name") or _collapsed(str(cells[1].get("text") or ""))
-    if not isinstance(name, str) or not name.strip():
+    if not name:
         raise ParseError(f"FantasyPros {expert.position} board row is missing a player name")
-    rank = _plain_int(cells[0].get("text"), label=f"{name.strip()} rank")
+    rank = _plain_int(cells[0].get("text"), label=f"{name} rank")
     if rank is None or rank < 1:
-        raise ParseError(f"FantasyPros {expert.position} rank for {name.strip()} is missing")
+        raise ParseError(f"FantasyPros {expert.position} rank for {name} is missing")
+    # Skill and kicker boards are rank, player, team, opponent, ECR.
+    # Team defenses omit the team abbreviation, so opponent and ECR shift left.
+    if len(cells) >= 6:
+        team = _blank_text(cells[2].get("text"))
+        opponent = _blank_text(cells[3].get("text"))
+        ecr = _plain_int(cells[4].get("text"), label=None)
+    else:
+        team = None
+        opponent = _blank_text(cells[2].get("text"))
+        ecr = _plain_int(cells[3].get("text"), label=None)
     return FantasyProsRank(
         season=expert.season,
         week=expert.week,
@@ -727,14 +734,31 @@ def _board_row(cells: list[dict[str, Any]], *, expert: FantasyProsExpert) -> Fan
         expert_id=expert.expert_id,
         expert_name=expert.name,
         accuracy_rank=expert.accuracy_rank,
-        player_id=match.group(1),
-        name=name.strip(),
-        team=_blank_text(cells[2].get("text")),
-        opponent=_blank_text(cells[3].get("text")),
+        player_id=player_id,
+        name=name,
+        team=team,
+        opponent=opponent,
         rank=rank,
-        ecr=_plain_int(cells[4].get("text"), label=None),
+        ecr=ecr,
         recorded_at=expert.recorded_at,
     )
+
+
+def _player_identity(cell: dict[str, Any]) -> tuple[str | None, str]:
+    anchor = cell.get("anchor") or {}
+    match = _PLAYER_ID.search(str(anchor.get("class") or ""))
+    raw_name = anchor.get("fp-player-name") or _collapsed(str(cell.get("text") or ""))
+    name = raw_name.strip() if isinstance(raw_name, str) else ""
+    if match is not None:
+        return match.group(1), name
+    href = str(anchor.get("href") or "")
+    leaf = urlsplit(href).path.rstrip("/").split("/")[-1]
+    if leaf.endswith(".php"):
+        leaf = leaf[: -len(".php")]
+    slug = leaf.strip()
+    if not slug or not name:
+        return None, name
+    return slug, name
 
 
 def _blank_text(raw: Any) -> str | None:
