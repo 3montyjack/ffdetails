@@ -1,0 +1,598 @@
+{
+  "season": 2026,
+  "week": 3,
+  "league_id": "1399822865787809792",
+  "matchup_id": 1,
+  "recorded_at": "2026-09-23T20:30:18+00:00",
+  "method": "Mean of FantasyPros week-3 public-board ranks, converted with the week-3 consensus rank-to-points curve. HALF for RB, WR, and TE. STD for QB, K, and DST.",
+  "compare_on": "2026-09-29",
+  "actuals_source": "Sleeper matchup starters_points for this league, week 3. actual_total stays empty until those games are final.",
+  "teams": [
+    {
+      "roster_id": 6,
+      "user_id": "1399834960931586048",
+      "manager": "3montyjack",
+      "team": "CMC or Bust",
+      "projected_total": 106.59,
+      "low_total": 100.2,
+      "high_total": 112.2,
+      "ecr_total": 105.1,
+      "sleeper_total": 105.42,
+      "starters": [
+        {
+          "sleeper_id": "8183",
+          "name": "Brock Purdy",
+          "position": "QB",
+          "team": "SF",
+          "boards": [
+            {
+              "expert_id": "7613",
+              "expert": "Justin Owens",
+              "rank": 3,
+              "points": 22.1
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 4,
+              "points": 21.0
+            },
+            {
+              "expert_id": "394",
+              "expert": "Rudy Gamble",
+              "rank": 5,
+              "points": 20.3
+            }
+          ],
+          "projected_points": 21.13,
+          "low_points": 20.3,
+          "high_points": 22.1,
+          "ecr": 4,
+          "ecr_points": 21.0,
+          "sleeper_pts_half_ppr": 21.8
+        },
+        {
+          "sleeper_id": "4034",
+          "name": "Christian McCaffrey",
+          "position": "RB",
+          "team": "SF",
+          "boards": [
+            {
+              "expert_id": "7560",
+              "expert": "Paul Brenton",
+              "rank": 2,
+              "points": 19.1
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 3,
+              "points": 18.2
+            },
+            {
+              "expert_id": "2791",
+              "expert": "Frank Ammirante",
+              "rank": 5,
+              "points": 18.0
+            }
+          ],
+          "projected_points": 18.43,
+          "low_points": 18.0,
+          "high_points": 19.1,
+          "ecr": 4,
+          "ecr_points": 18.2,
+          "sleeper_pts_half_ppr": 18.4
+        },
+        {
+          "sleeper_id": "7543",
+          "name": "Travis Etienne Jr.",
+          "position": "RB",
+          "team": "NO",
+          "boards": [
+            {
+              "expert_id": "2791",
+              "expert": "Frank Ammirante",
+              "rank": 23,
+              "points": 11.3
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 25,
+              "points": 11.2
+            },
+            {
+              "expert_id": "7560",
+              "expert": "Paul Brenton",
+              "rank": 27,
+              "points": 10.7
+            }
+          ],
+          "projected_points": 11.07,
+          "low_points": 10.7,
+          "high_points": 11.3,
+          "ecr": 26,
+          "ecr_points": 10.8,
+          "sleeper_pts_half_ppr": 10.01
+        },
+        {
+          "sleeper_id": "8137",
+          "name": "George Pickens",
+          "position": "WR",
+          "team": "DAL",
+          "boards": [
+            {
+              "expert_id": "3354",
+              "expert": "Fantasy BR",
+              "rank": 11,
+              "points": 12.6
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 12,
+              "points": 12.2
+            },
+            {
+              "expert_id": "3666",
+              "expert": "Kyle Krajewski",
+              "rank": 16,
+              "points": 11.8
+            }
+          ],
+          "projected_points": 12.2,
+          "low_points": 11.8,
+          "high_points": 12.6,
+          "ecr": 10,
+          "ecr_points": 13.1,
+          "sleeper_pts_half_ppr": 12.41
+        },
+        {
+          "sleeper_id": "9500",
+          "name": "Josh Downs",
+          "position": "WR",
+          "team": "IND",
+          "boards": [
+            {
+              "expert_id": "3666",
+              "expert": "Kyle Krajewski",
+              "rank": 26,
+              "points": 10.4
+            },
+            {
+              "expert_id": "3354",
+              "expert": "Fantasy BR",
+              "rank": 32,
+              "points": 9.1
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 35,
+              "points": 9.0
+            }
+          ],
+          "projected_points": 9.5,
+          "low_points": 9.0,
+          "high_points": 10.4,
+          "ecr": 29,
+          "ecr_points": 9.5,
+          "sleeper_pts_half_ppr": 9.11
+        },
+        {
+          "sleeper_id": "5001",
+          "name": "Dalton Schultz",
+          "position": "TE",
+          "team": "HOU",
+          "boards": [
+            {
+              "expert_id": "1549",
+              "expert": "Tal Malachovsky",
+              "rank": 5,
+              "points": 10.7
+            },
+            {
+              "expert_id": "1508",
+              "expert": "Brandon Murchison",
+              "rank": 6,
+              "points": 10.5
+            },
+            {
+              "expert_id": "2716",
+              "expert": "Ellis Johnson",
+              "rank": 9,
+              "points": 8.9
+            }
+          ],
+          "projected_points": 10.03,
+          "low_points": 8.9,
+          "high_points": 10.7,
+          "ecr": 10,
+          "ecr_points": 8.4,
+          "sleeper_pts_half_ppr": 8.27
+        },
+        {
+          "sleeper_id": "11620",
+          "name": "Rome Odunze",
+          "position": "WR",
+          "team": "CHI",
+          "boards": [
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 34,
+              "points": 9.0
+            },
+            {
+              "expert_id": "3354",
+              "expert": "Fantasy BR",
+              "rank": 37,
+              "points": 8.7
+            },
+            {
+              "expert_id": "3666",
+              "expert": "Kyle Krajewski",
+              "rank": 61,
+              "points": 6.6
+            }
+          ],
+          "projected_points": 8.1,
+          "low_points": 6.6,
+          "high_points": 9.0,
+          "ecr": 39,
+          "ecr_points": 8.7,
+          "sleeper_pts_half_ppr": 7.35
+        },
+        {
+          "sleeper_id": "11539",
+          "name": "Jake Bates",
+          "position": "K",
+          "team": "DET",
+          "boards": [
+            {
+              "expert_id": "670",
+              "expert": "Mauricio Gutierrez",
+              "rank": 4,
+              "points": 8.9
+            },
+            {
+              "expert_id": "394",
+              "expert": "Rudy Gamble",
+              "rank": 5,
+              "points": 8.9
+            },
+            {
+              "expert_id": "3945",
+              "expert": "Coach Craig Sports",
+              "rank": 11,
+              "points": 7.8
+            }
+          ],
+          "projected_points": 8.53,
+          "low_points": 7.8,
+          "high_points": 8.9,
+          "ecr": 11,
+          "ecr_points": 7.8,
+          "sleeper_pts_half_ppr": 8.67
+        },
+        {
+          "sleeper_id": "KC",
+          "name": "Kansas City Chiefs",
+          "position": "DST",
+          "team": null,
+          "boards": [
+            {
+              "expert_id": "101",
+              "expert": "Matt De Lima",
+              "rank": 1,
+              "points": 8.1
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 2,
+              "points": 7.6
+            },
+            {
+              "expert_id": "394",
+              "expert": "Rudy Gamble",
+              "rank": 8,
+              "points": 7.1
+            }
+          ],
+          "projected_points": 7.6,
+          "low_points": 7.1,
+          "high_points": 8.1,
+          "ecr": 2,
+          "ecr_points": 7.6,
+          "sleeper_pts_half_ppr": 9.4
+        }
+      ],
+      "actual_total": null
+    },
+    {
+      "roster_id": 14,
+      "user_id": null,
+      "manager": "omv2718",
+      "team": "Nacua Correctional Inst.",
+      "projected_total": 97.75,
+      "low_total": 93.2,
+      "high_total": 102.1,
+      "ecr_total": 94.1,
+      "sleeper_total": 104.15,
+      "starters": [
+        {
+          "sleeper_id": "4881",
+          "name": "Lamar Jackson",
+          "position": "QB",
+          "team": "BAL",
+          "boards": [
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 2,
+              "points": 23.0
+            },
+            {
+              "expert_id": "7613",
+              "expert": "Justin Owens",
+              "rank": 2,
+              "points": 23.0
+            },
+            {
+              "expert_id": "394",
+              "expert": "Rudy Gamble",
+              "rank": 3,
+              "points": 22.1
+            }
+          ],
+          "projected_points": 22.7,
+          "low_points": 22.1,
+          "high_points": 23.0,
+          "ecr": 2,
+          "ecr_points": 23.0,
+          "sleeper_pts_half_ppr": 24.09
+        },
+        {
+          "sleeper_id": "7021",
+          "name": "Rico Dowdle",
+          "position": "RB",
+          "team": "PIT",
+          "boards": [
+            {
+              "expert_id": "2791",
+              "expert": "Frank Ammirante",
+              "rank": 58,
+              "points": 3.7
+            }
+          ],
+          "projected_points": 3.7,
+          "low_points": 3.7,
+          "high_points": 3.7,
+          "ecr": 65,
+          "ecr_points": 2.8,
+          "sleeper_pts_half_ppr": 11.05
+        },
+        {
+          "sleeper_id": "11586",
+          "name": "Blake Corum",
+          "position": "RB",
+          "team": "LAR",
+          "boards": [
+            {
+              "expert_id": "7560",
+              "expert": "Paul Brenton",
+              "rank": 25,
+              "points": 11.2
+            },
+            {
+              "expert_id": "2791",
+              "expert": "Frank Ammirante",
+              "rank": 31,
+              "points": 9.2
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 31,
+              "points": 9.2
+            }
+          ],
+          "projected_points": 9.87,
+          "low_points": 9.2,
+          "high_points": 11.2,
+          "ecr": 30,
+          "ecr_points": 9.4,
+          "sleeper_pts_half_ppr": 7.71
+        },
+        {
+          "sleeper_id": "9493",
+          "name": "Puka Nacua",
+          "position": "WR",
+          "team": "LAR",
+          "boards": [
+            {
+              "expert_id": "3354",
+              "expert": "Fantasy BR",
+              "rank": 4,
+              "points": 15.3
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 11,
+              "points": 12.6
+            }
+          ],
+          "projected_points": 13.95,
+          "low_points": 12.6,
+          "high_points": 15.3,
+          "ecr": 25,
+          "ecr_points": 9.9,
+          "sleeper_pts_half_ppr": 14.42
+        },
+        {
+          "sleeper_id": "8112",
+          "name": "Drake London",
+          "position": "WR",
+          "team": "ATL",
+          "boards": [
+            {
+              "expert_id": "3666",
+              "expert": "Kyle Krajewski",
+              "rank": 12,
+              "points": 12.2
+            },
+            {
+              "expert_id": "3354",
+              "expert": "Fantasy BR",
+              "rank": 13,
+              "points": 12.2
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 14,
+              "points": 12.0
+            }
+          ],
+          "projected_points": 12.13,
+          "low_points": 12.0,
+          "high_points": 12.2,
+          "ecr": 12,
+          "ecr_points": 12.2,
+          "sleeper_pts_half_ppr": 11.16
+        },
+        {
+          "sleeper_id": "2216",
+          "name": "Mike Evans",
+          "position": "WR",
+          "team": "SF",
+          "boards": [
+            {
+              "expert_id": "3354",
+              "expert": "Fantasy BR",
+              "rank": 15,
+              "points": 11.6
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 16,
+              "points": 11.8
+            },
+            {
+              "expert_id": "3666",
+              "expert": "Kyle Krajewski",
+              "rank": 20,
+              "points": 11.1
+            }
+          ],
+          "projected_points": 11.5,
+          "low_points": 11.1,
+          "high_points": 11.8,
+          "ecr": 14,
+          "ecr_points": 12.0,
+          "sleeper_pts_half_ppr": 11.51
+        },
+        {
+          "sleeper_id": "12506",
+          "name": "Harold Fannin Jr.",
+          "position": "TE",
+          "team": "CLE",
+          "boards": [
+            {
+              "expert_id": "1549",
+              "expert": "Tal Malachovsky",
+              "rank": 10,
+              "points": 8.4
+            },
+            {
+              "expert_id": "1508",
+              "expert": "Brandon Murchison",
+              "rank": 16,
+              "points": 8.0
+            },
+            {
+              "expert_id": "2716",
+              "expert": "Ellis Johnson",
+              "rank": 17,
+              "points": 7.4
+            }
+          ],
+          "projected_points": 7.93,
+          "low_points": 7.4,
+          "high_points": 8.4,
+          "ecr": 13,
+          "ecr_points": 8.2,
+          "sleeper_pts_half_ppr": 7.26
+        },
+        {
+          "sleeper_id": "7839",
+          "name": "Evan McPherson",
+          "position": "K",
+          "team": "CIN",
+          "boards": [
+            {
+              "expert_id": "3945",
+              "expert": "Coach Craig Sports",
+              "rank": 8,
+              "points": 8.4
+            },
+            {
+              "expert_id": "670",
+              "expert": "Mauricio Gutierrez",
+              "rank": 10,
+              "points": 8.2
+            },
+            {
+              "expert_id": "394",
+              "expert": "Rudy Gamble",
+              "rank": 14,
+              "points": 7.6
+            }
+          ],
+          "projected_points": 8.07,
+          "low_points": 7.6,
+          "high_points": 8.4,
+          "ecr": 7,
+          "ecr_points": 8.5,
+          "sleeper_pts_half_ppr": 7.46
+        },
+        {
+          "sleeper_id": "SEA",
+          "name": "Seattle Seahawks",
+          "position": "DST",
+          "team": null,
+          "boards": [
+            {
+              "expert_id": "394",
+              "expert": "Rudy Gamble",
+              "rank": 1,
+              "points": 8.1
+            },
+            {
+              "expert_id": "7254",
+              "expert": "Pete Nova",
+              "rank": 1,
+              "points": 8.1
+            },
+            {
+              "expert_id": "101",
+              "expert": "Matt De Lima",
+              "rank": 4,
+              "points": 7.5
+            }
+          ],
+          "projected_points": 7.9,
+          "low_points": 7.5,
+          "high_points": 8.1,
+          "ecr": 1,
+          "ecr_points": 8.1,
+          "sleeper_pts_half_ppr": 9.49
+        }
+      ],
+      "actual_total": null
+    }
+  ]
+}
