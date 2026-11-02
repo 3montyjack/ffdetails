@@ -33,7 +33,10 @@ ffdetails fantasypros-accuracy --season 2026 --through-week 2
 ffdetails fantasypros-ranks --season 2026 --week 3 --scoring HALF --through-week 2 --per-position 3
 ffdetails injury-tags
 ffdetails waiver-bids --league-id LEAGUE_ID --season 2026 --week 3
+ffdetails stat-model --out AGENT_STAT.md
 ```
+
+`stat-model` fits a half-PPR model from closing moneylines and the weekly injury report, then writes `AGENT_STAT.md`. It does not read Sleeper stats. The moneyline sets the margin, the total on that same board sets the point level, and each injury status scales a player's pre-week mean. The note records how far those estimates landed from the holdout.
 
 Snapshots append to `ffdetails.sqlite` in the current directory. `--db` selects another file.
 
