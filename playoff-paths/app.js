@@ -118,27 +118,34 @@ function selectTeam(data, rosterId) {
       }).join("");
   }
 
+  renderElimInline(data, rosterId);
   renderField(data, rosterId);
   history.replaceState(null, "", `#team-${rosterId}`);
 }
 
-function renderElim(data) {
+/** Week-by-week death/alive checkpoints — only for the long-shot focus club, inside path panel. */
+function renderElimInline(data, rosterId) {
+  const el = document.getElementById("selElim");
   const elim = data.focus?.elimination;
-  if (!elim) return;
-  const rows = (elim.checkpoints || [])
+  const isFocus = rosterId === data.focus_roster_id;
+  if (!el || !elim || !isFocus || !(elim.checkpoints || []).length) {
+    if (el) {
+      el.hidden = true;
+      el.innerHTML = "";
+    }
+    return;
+  }
+  const rows = elim.checkpoints
     .map(
       (c) =>
         `<tr><th scope="row">${escapeHtml(c.when)}</th><td>${escapeHtml(c.signal)}</td><td>${escapeHtml(c.status)}</td></tr>`
     )
     .join("");
-  document.getElementById("elimCopy").innerHTML = `
-    <p><strong>3montyjack / WhenPurdyGivesYouVikings</strong> — ${escapeHtml(elim.practical_answer)}</p>
-    ${
-      rows
-        ? `<div class="elim-table-wrap"><table class="elim-table"><thead><tr><th>When (CST)</th><th>Signal</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div>`
-        : ""
-    }
-    <p style="margin-top:0.9rem">Conditionals (same engine): win W11 → ~${elim.p_make_if_win_w11}% · lose W11 → ~${elim.p_make_if_lose_w11}%.</p>
+  el.hidden = false;
+  el.innerHTML = `
+    <h4>When you’re out (CST)</h4>
+    <p class="elim-note">Math death usually waits until W14; odds can go near-zero earlier.</p>
+    <div class="elim-table-wrap"><table class="elim-table"><thead><tr><th>When</th><th>Signal</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div>
   `;
 }
 
@@ -170,7 +177,6 @@ async function main() {
       : data.ui?.default_roster_id || data.standings[0].roster_id;
 
   selectTeam(data, initial);
-  renderElim(data);
 }
 
 main().catch((err) => {
