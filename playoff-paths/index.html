@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Playoff Path Board · Should’ve kept Watson</title>
+  <meta name="description" content="March Madness–style playoff paths for every team in Should’ve kept Watson. Live Sleeper standings + Monte Carlo odds." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="court-lines" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="eyebrow">League playoff board · top 7 of 14</p>
+    <h1 class="brand">Should’ve kept Watson</h1>
+    <p class="lede">Every manager’s playoff chance and the results that get them in — click a team, read the path.</p>
+    <p class="meta" id="asOf">Loading sims…</p>
+  </header>
+
+  <main>
+    <section class="odds-board" aria-label="Playoff odds for all teams">
+      <div class="section-head">
+        <h2>The field</h2>
+        <p>Seed order now. Bars are Monte Carlo make-% (weeks 11–14).</p>
+      </div>
+      <ol class="field" id="field"></ol>
+    </section>
+
+    <section class="path-stage" aria-live="polite">
+      <div class="section-head">
+        <h2>Path board</h2>
+        <p id="pathHint">Select any manager above.</p>
+      </div>
+
+      <article class="path-panel" id="pathPanel">
+        <div class="path-hero">
+          <div>
+            <p class="path-seed" id="selSeed">—</p>
+            <h3 id="selName">—</h3>
+            <p class="path-owner" id="selOwner">—</p>
+            <p class="path-record" id="selRecord">—</p>
+          </div>
+          <div class="chance-orb">
+            <span class="chance-num" id="selPct">—</span>
+            <span class="chance-label">playoff</span>
+          </div>
+        </div>
+
+        <p class="path-blurb" id="selBlurb"></p>
+
+        <div class="path-grid">
+          <div>
+            <h4>Remaining slate</h4>
+            <ul class="slate" id="selSlate"></ul>
+          </div>
+          <div>
+            <h4>What the makes look like</h4>
+            <ul class="masks" id="selMasks"></ul>
+            <div class="win-need" id="selWinNeed"></div>
+          </div>
+        </div>
+
+        <div class="week-need" id="selWeekNeed"></div>
+      </article>
+    </section>
+
+    <section class="elim-band" id="elimBand">
+      <div class="section-head">
+        <h2>When you’re out</h2>
+        <p>Mathematical vs practical elimination for 3montyjack.</p>
+      </div>
+      <div class="elim-copy" id="elimCopy"></div>
+    </section>
+
+    <section class="method">
+      <h2>Method</h2>
+      <p id="methodCopy"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sleeper league <span id="leagueId"></span> · Static board · Times in America/Chicago labeled CST</p>
+  </footer>
+
+  <script src="./app.js" type="module"></script>
+</body>
+</html>
