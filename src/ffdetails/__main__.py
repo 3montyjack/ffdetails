@@ -21,6 +21,12 @@ def main(argv: Sequence[str] | None = None, *, recorder: Recorder | None = None)
         parser.print_help()
         return 2
     try:
+        if args.command == "stat-model":
+            from ffdetails.statmodel import write_stat_model
+
+            count = write_stat_model(UrllibClient(), args.out)
+            print(f"wrote {args.out} ({count} holdout games)")
+            return 0
         count = run(args, recorder=recorder)
     except FfdetailsError as exc:
         print(f"ffdetails: {exc}", file=sys.stderr)
@@ -101,6 +107,16 @@ def build_parser() -> argparse.ArgumentParser:
     bids.add_argument("--league-id", required=True)
     bids.add_argument("--season", type=int, required=True)
     bids.add_argument("--week", type=int, required=True)
+
+    stat_model = sub.add_parser(
+        "stat-model",
+        help="fit moneylines and injury reports into the agent stat note",
+    )
+    stat_model.add_argument(
+        "--out",
+        default="AGENT_STAT.md",
+        help="markdown file to write",
+    )
     return parser
 
 
