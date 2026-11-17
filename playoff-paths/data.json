@@ -1,0 +1,1709 @@
+{
+  "as_of": "2026-11-17 11:35 AM CST",
+  "league_id": "1399822865787809792",
+  "league_name": "A Lawyer, a Doctor, and a Banker Walk into a Bar\u2026",
+  "brand": "Should've kept Watson",
+  "focus_roster_id": 6,
+  "focus_owner": "3montyjack",
+  "playoff_teams": 7,
+  "playoff_week_start": 15,
+  "scored_through": 10,
+  "remaining_weeks": [
+    11,
+    12,
+    13,
+    14
+  ],
+  "sims": 80000,
+  "method": {
+    "scoring_weeks": "1-9",
+    "sigma_floor": 12.0,
+    "seed_rule": "wins then points (playoff_seed_type=1)",
+    "note": "Base case matches playoff-odds.md (W1\u20139 \u03bc/\u03c3). W1\u201310 sensitivity separate."
+  },
+  "standings": [
+    {
+      "wins": 8,
+      "losses": 2,
+      "ties": 0,
+      "pf": 1155.4,
+      "name": "Egbukake ",
+      "owner": "yiakduman",
+      "roster_id": 2,
+      "seed": 1,
+      "playoff_pct": 100.0,
+      "playoff_pct_w110": 100.0,
+      "mu": 111.2,
+      "sigma": 17.3
+    },
+    {
+      "wins": 8,
+      "losses": 2,
+      "ties": 0,
+      "pf": 1121.92,
+      "name": "This Kraft Got Me Tuten",
+      "owner": "ElliottAnd",
+      "roster_id": 3,
+      "seed": 2,
+      "playoff_pct": 100.0,
+      "playoff_pct_w110": 100.0,
+      "mu": 111.6,
+      "sigma": 13.0
+    },
+    {
+      "wins": 7,
+      "losses": 3,
+      "ties": 0,
+      "pf": 1060.92,
+      "name": "rattpack000",
+      "owner": "rattpack000",
+      "roster_id": 7,
+      "seed": 3,
+      "playoff_pct": 99.7,
+      "playoff_pct_w110": 99.5,
+      "mu": 106.9,
+      "sigma": 21.6
+    },
+    {
+      "wins": 6,
+      "losses": 4,
+      "ties": 0,
+      "pf": 960.88,
+      "name": "Team Glue Eaters",
+      "owner": "printdot",
+      "roster_id": 5,
+      "seed": 4,
+      "playoff_pct": 75.8,
+      "playoff_pct_w110": 79.1,
+      "mu": 95.1,
+      "sigma": 12.0
+    },
+    {
+      "wins": 5,
+      "losses": 5,
+      "ties": 0,
+      "pf": 1070.34,
+      "name": "eleong5",
+      "owner": "eleong5",
+      "roster_id": 13,
+      "seed": 5,
+      "playoff_pct": 88.3,
+      "playoff_pct_w110": 85.0,
+      "mu": 108.0,
+      "sigma": 12.0
+    },
+    {
+      "wins": 5,
+      "losses": 5,
+      "ties": 0,
+      "pf": 1042.98,
+      "name": "Morning Woody",
+      "owner": "CockerDaniel",
+      "roster_id": 4,
+      "seed": 6,
+      "playoff_pct": 78.0,
+      "playoff_pct_w110": 63.5,
+      "mu": 106.1,
+      "sigma": 16.9
+    },
+    {
+      "wins": 5,
+      "losses": 5,
+      "ties": 0,
+      "pf": 980.24,
+      "name": "pimpdaddymac33",
+      "owner": "pimpdaddymac33",
+      "roster_id": 8,
+      "seed": 7,
+      "playoff_pct": 41.3,
+      "playoff_pct_w110": 39.1,
+      "mu": 97.1,
+      "sigma": 26.0
+    },
+    {
+      "wins": 4,
+      "losses": 6,
+      "ties": 0,
+      "pf": 1084.9,
+      "name": "WhenPurdyGivesYouVikings",
+      "owner": "3montyjack",
+      "roster_id": 6,
+      "seed": 8,
+      "playoff_pct": 21.1,
+      "playoff_pct_w110": 43.2,
+      "mu": 99.0,
+      "sigma": 12.0
+    },
+    {
+      "wins": 4,
+      "losses": 6,
+      "ties": 0,
+      "pf": 1007.7,
+      "name": "Josh Allen\u2019s Old Tweets",
+      "owner": "EAmbort26",
+      "roster_id": 1,
+      "seed": 9,
+      "playoff_pct": 40.8,
+      "playoff_pct_w110": 40.0,
+      "mu": 100.8,
+      "sigma": 12.0
+    },
+    {
+      "wins": 4,
+      "losses": 6,
+      "ties": 0,
+      "pf": 1004.7,
+      "name": "PushingPuka",
+      "owner": "PushingPuka",
+      "roster_id": 10,
+      "seed": 10,
+      "playoff_pct": 24.6,
+      "playoff_pct_w110": 32.6,
+      "mu": 97.5,
+      "sigma": 18.1
+    },
+    {
+      "wins": 4,
+      "losses": 6,
+      "ties": 0,
+      "pf": 960.98,
+      "name": "greyhizzle44",
+      "owner": "greyhizzle44",
+      "roster_id": 12,
+      "seed": 11,
+      "playoff_pct": 15.4,
+      "playoff_pct_w110": 9.5,
+      "mu": 97.9,
+      "sigma": 16.7
+    },
+    {
+      "wins": 4,
+      "losses": 6,
+      "ties": 0,
+      "pf": 928.96,
+      "name": "Patslife10",
+      "owner": "Patslife10",
+      "roster_id": 11,
+      "seed": 12,
+      "playoff_pct": 13.2,
+      "playoff_pct_w110": 7.2,
+      "mu": 97.7,
+      "sigma": 19.3
+    },
+    {
+      "wins": 4,
+      "losses": 6,
+      "ties": 0,
+      "pf": 874.16,
+      "name": "Maye no Loveland on Moon",
+      "owner": "Joejuod",
+      "roster_id": 9,
+      "seed": 13,
+      "playoff_pct": 1.9,
+      "playoff_pct_w110": 1.4,
+      "mu": 87.9,
+      "sigma": 20.1
+    },
+    {
+      "wins": 2,
+      "losses": 8,
+      "ties": 0,
+      "pf": 858.54,
+      "name": "Nacua Correctional Inst.",
+      "owner": "omv2718",
+      "roster_id": 14,
+      "seed": 14,
+      "playoff_pct": 0.0,
+      "playoff_pct_w110": 0.0,
+      "mu": 88.1,
+      "sigma": 15.1
+    }
+  ],
+  "focus_schedule": [
+    {
+      "week": 11,
+      "opponent_id": 11,
+      "opponent": "Patslife10",
+      "opponent_owner": "Patslife10",
+      "opponent_record": "4-6",
+      "opponent_mu": 97.7,
+      "focus_mu": 99.0,
+      "p_win": 0.524
+    },
+    {
+      "week": 12,
+      "opponent_id": 2,
+      "opponent": "Egbukake ",
+      "opponent_owner": "yiakduman",
+      "opponent_record": "8-2",
+      "opponent_mu": 111.2,
+      "focus_mu": 99.0,
+      "p_win": 0.281
+    },
+    {
+      "week": 13,
+      "opponent_id": 7,
+      "opponent": "rattpack000",
+      "opponent_owner": "rattpack000",
+      "opponent_record": "7-3",
+      "opponent_mu": 106.9,
+      "focus_mu": 99.0,
+      "p_win": 0.375
+    },
+    {
+      "week": 14,
+      "opponent_id": 4,
+      "opponent": "Morning Woody",
+      "opponent_owner": "CockerDaniel",
+      "opponent_record": "5-5",
+      "opponent_mu": 106.1,
+      "focus_mu": 99.0,
+      "p_win": 0.365
+    }
+  ],
+  "focus": {
+    "playoff_pct": 21.1,
+    "playoff_pct_w110_sensitivity": 43.2,
+    "end_wins": {
+      "4": 13.4,
+      "5": 36.3,
+      "6": 34.3,
+      "7": 14.0,
+      "8": 2.0
+    },
+    "make_given_wins": {
+      "4": {
+        "p_make": 0.0,
+        "path_pct": 13.4
+      },
+      "5": {
+        "p_make": 0.0,
+        "path_pct": 36.3
+      },
+      "6": {
+        "p_make": 16.6,
+        "path_pct": 34.3
+      },
+      "7": {
+        "p_make": 96.2,
+        "path_pct": 14.0
+      },
+      "8": {
+        "p_make": 100.0,
+        "path_pct": 2.0
+      }
+    },
+    "top_make_masks": [
+      {
+        "mask": "WLWW",
+        "pct_of_makes": 24.1
+      },
+      {
+        "mask": "WWLW",
+        "pct_of_makes": 15.6
+      },
+      {
+        "mask": "WWWL",
+        "pct_of_makes": 15.2
+      },
+      {
+        "mask": "WLLW",
+        "pct_of_makes": 11.0
+      },
+      {
+        "mask": "WWWW",
+        "pct_of_makes": 9.4
+      },
+      {
+        "mask": "LWWW",
+        "pct_of_makes": 8.7
+      },
+      {
+        "mask": "WLWL",
+        "pct_of_makes": 5.2
+      },
+      {
+        "mask": "WWLL",
+        "pct_of_makes": 3.8
+      },
+      {
+        "mask": "LLWW",
+        "pct_of_makes": 3.4
+      },
+      {
+        "mask": "LWLW",
+        "pct_of_makes": 2.5
+      },
+      {
+        "mask": "LWWL",
+        "pct_of_makes": 1.0
+      }
+    ],
+    "week_win_rate": {
+      "11": 52.2,
+      "12": 28.2,
+      "13": 37.7,
+      "14": 36.8
+    },
+    "week_win_given_make": {
+      "11": 84.4,
+      "12": 56.3,
+      "13": 67.1,
+      "14": 74.7
+    },
+    "conditionals": {
+      "W11L": {
+        "playoff_pct": 7.0,
+        "n": 20000
+      },
+      "W11W": {
+        "playoff_pct": 34.0,
+        "n": 20000
+      },
+      "WWWL": {
+        "playoff_pct": 94.2,
+        "n": 20000
+      },
+      "WWLW": {
+        "playoff_pct": 98.1,
+        "n": 20000
+      },
+      "WLWW": {
+        "playoff_pct": 98.0,
+        "n": 20000
+      },
+      "LWWW": {
+        "playoff_pct": 97.2,
+        "n": 20000
+      },
+      "WWLL": {
+        "playoff_pct": 13.7,
+        "n": 20000
+      },
+      "WLLW": {
+        "playoff_pct": 26.4,
+        "n": 20000
+      },
+      "WLWL": {
+        "playoff_pct": 13.4,
+        "n": 20000
+      },
+      "LWLW": {
+        "playoff_pct": 16.8,
+        "n": 20000
+      },
+      "WWWW": {
+        "playoff_pct": 100.0,
+        "n": 20000
+      },
+      "WLLL": {
+        "playoff_pct": 0.0,
+        "n": 20000
+      },
+      "LLLL": {
+        "playoff_pct": 0.0,
+        "n": 20000
+      }
+    },
+    "elimination": {
+      "now_math_eliminated": false,
+      "earliest_math_notes": [
+        "Now (4\u20136, 4 left): max wins 8. No team has >8. Not mathematically eliminated.",
+        "After a W11 loss (4\u20137, 3 left): max 7. Only Egbukake & Kraft (8) sit above 7. Still alive on wins.",
+        "After two straight losses (4\u20138, 2 left): max 6. At most ~3 teams already above 6 (8/8/7). Still alive.",
+        "After three losses (4\u20139, 1 left): max 5. ~4 teams can sit above 5 without help (8/8/7/6). Still not 7.",
+        "Pure wins math-elim with zero remaining games typically needs \u22657 teams with \u22655 wins while you sit at 4 \u2014 often only after week 14 finals, or earlier if the 5-win pack keeps winning while you lose."
+      ],
+      "sim_first_elim": {
+        "14": 34702,
+        "never": 16907,
+        "13": 27425,
+        "final_miss": 966
+      },
+      "alive_after": {
+        "10": 80000,
+        "11": 80000,
+        "12": 80000,
+        "13": 52575,
+        "14": 17873
+      },
+      "p_make_if_lose_w11": 7.0,
+      "p_make_if_win_w11": 34.0,
+      "practical_answer": "You probably won\u2019t be mathematically eliminated until week 14. You\u2019ll know you\u2019re practically dead much earlier \u2014 often after a W11 loss (~7%), and almost for sure after 0\u20132 through W12 (~2%) or 0\u20133 through W13 (0% in sims).",
+      "as_of": "Tuesday 2026-11-17 11:32 AM CST",
+      "checkpoints": [
+        {
+          "when": "Now",
+          "signal": "4\u20136, 4 weeks left",
+          "status": "Alive long shot (~22%)"
+        },
+        {
+          "when": "After W11 (Sun 11/22 night CST)",
+          "signal": "Win \u2192 5\u20136",
+          "status": "Still alive (~34%)"
+        },
+        {
+          "when": "After W11 (Sun 11/22 night CST)",
+          "signal": "Loss \u2192 4\u20137",
+          "status": "Near-dead (~7%) \u2014 need 3\u20130 gauntlet"
+        },
+        {
+          "when": "After W12 (Sun 11/29 night CST)",
+          "signal": "WW \u2192 6\u20136",
+          "status": "Strong (~63%)"
+        },
+        {
+          "when": "After W12 (Sun 11/29 night CST)",
+          "signal": "LL \u2192 4\u20138",
+          "status": "Near-zero (~2%)"
+        },
+        {
+          "when": "After W13 (Sun 12/6 night CST)",
+          "signal": "WWW \u2192 7\u20136",
+          "status": "Almost locked (~96%)"
+        },
+        {
+          "when": "After W13 (Sun 12/6 night CST)",
+          "signal": "LLL \u2192 4\u20139",
+          "status": "Effectively dead (0% in sims)"
+        },
+        {
+          "when": "After W14 (Sun 12/13 night CST)",
+          "signal": "\u22645 wins / 7+ wins",
+          "status": "Math/seed lock \u2014 \u22645 out, 7+ in"
+        }
+      ],
+      "doc": "/cursor/stores/self/docs/playoff-elimination-timeline.md"
+    }
+  },
+  "paths": {
+    "1": {
+      "playoff_pct": 40.5,
+      "top_paths": [
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 29.4
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 19.7
+        },
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 18.8
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 17.9
+        },
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 10.1
+        },
+        {
+          "mask": "WLWL",
+          "pct_of_makes": 0.9
+        }
+      ],
+      "rem_wins_dist": {
+        "2": 4.2,
+        "3": 66.4,
+        "4": 29.4
+      },
+      "week_win_given_make": {
+        "11": 80.3,
+        "12": 78.0,
+        "13": 87.8,
+        "14": 79.1
+      }
+    },
+    "2": {
+      "playoff_pct": 100.0,
+      "top_paths": [
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 19.6
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 15.5
+        },
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 14.4
+        },
+        {
+          "mask": "LWLW",
+          "pct_of_makes": 11.2
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 7.9
+        },
+        {
+          "mask": "LLWW",
+          "pct_of_makes": 5.9
+        }
+      ],
+      "rem_wins_dist": {
+        "0": 0.8,
+        "1": 8.7,
+        "2": 29.3,
+        "3": 41.5,
+        "4": 19.6
+      },
+      "week_win_given_make": {
+        "11": 56.1,
+        "12": 71.9,
+        "13": 58.0,
+        "14": 84.4
+      }
+    },
+    "3": {
+      "playoff_pct": 100.0,
+      "top_paths": [
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 38.1
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 17.0
+        },
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 13.1
+        },
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 7.3
+        },
+        {
+          "mask": "WLLW",
+          "pct_of_makes": 5.8
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 5.0
+        }
+      ],
+      "rem_wins_dist": {
+        "0": 0.2,
+        "1": 2.7,
+        "2": 16.6,
+        "3": 42.4,
+        "4": 38.1
+      },
+      "week_win_given_make": {
+        "11": 88.1,
+        "12": 69.2,
+        "13": 74.3,
+        "14": 83.9
+      }
+    },
+    "4": {
+      "playoff_pct": 78.1,
+      "top_paths": [
+        {
+          "mask": "WLLW",
+          "pct_of_makes": 16.9
+        },
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 15.6
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 12.8
+        },
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 11.0
+        },
+        {
+          "mask": "WWLL",
+          "pct_of_makes": 8.5
+        },
+        {
+          "mask": "WLWL",
+          "pct_of_makes": 6.8
+        }
+      ],
+      "rem_wins_dist": {
+        "1": 3.4,
+        "2": 46.1,
+        "3": 39.6,
+        "4": 11.0
+      },
+      "week_win_given_make": {
+        "11": 79.2,
+        "12": 55.3,
+        "13": 49.7,
+        "14": 73.9
+      }
+    },
+    "5": {
+      "playoff_pct": 75.7,
+      "top_paths": [
+        {
+          "mask": "LWWL",
+          "pct_of_makes": 15.7
+        },
+        {
+          "mask": "LWLW",
+          "pct_of_makes": 13.8
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 12.0
+        },
+        {
+          "mask": "WWLL",
+          "pct_of_makes": 7.6
+        },
+        {
+          "mask": "LLWW",
+          "pct_of_makes": 7.0
+        },
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 6.7
+        }
+      ],
+      "rem_wins_dist": {
+        "0": 0.0,
+        "1": 16.1,
+        "2": 51.3,
+        "3": 27.4,
+        "4": 5.2
+      },
+      "week_win_given_make": {
+        "11": 37.4,
+        "12": 72.7,
+        "13": 57.9,
+        "14": 53.6
+      }
+    },
+    "6": {
+      "playoff_pct": 21.0,
+      "top_paths": [
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 23.7
+        },
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 15.5
+        },
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 15.2
+        },
+        {
+          "mask": "WLLW",
+          "pct_of_makes": 10.4
+        },
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 10.1
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 8.3
+        }
+      ],
+      "rem_wins_dist": {
+        "2": 27.2,
+        "3": 62.8,
+        "4": 10.1
+      },
+      "week_win_given_make": {
+        "11": 84.4,
+        "12": 56.6,
+        "13": 67.9,
+        "14": 74.0
+      }
+    },
+    "7": {
+      "playoff_pct": 99.7,
+      "top_paths": [
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 18.5
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 11.2
+        },
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 11.1
+        },
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 10.6
+        },
+        {
+          "mask": "WWLL",
+          "pct_of_makes": 6.4
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 6.4
+        }
+      ],
+      "rem_wins_dist": {
+        "0": 1.1,
+        "1": 10.9,
+        "2": 30.2,
+        "3": 39.3,
+        "4": 18.5
+      },
+      "week_win_given_make": {
+        "11": 74.1,
+        "12": 63.0,
+        "13": 62.7,
+        "14": 63.5
+      }
+    },
+    "8": {
+      "playoff_pct": 41.3,
+      "top_paths": [
+        {
+          "mask": "WLWL",
+          "pct_of_makes": 18.2
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 13.7
+        },
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 11.8
+        },
+        {
+          "mask": "LLWW",
+          "pct_of_makes": 11.1
+        },
+        {
+          "mask": "WLLW",
+          "pct_of_makes": 8.4
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 7.5
+        }
+      ],
+      "rem_wins_dist": {
+        "1": 0.6,
+        "2": 54.4,
+        "3": 38.5,
+        "4": 6.6
+      },
+      "week_win_given_make": {
+        "11": 70.2,
+        "12": 48.1,
+        "13": 76.4,
+        "14": 56.3
+      }
+    },
+    "9": {
+      "playoff_pct": 2.0,
+      "top_paths": [
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 39.3
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 21.1
+        },
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 20.8
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 9.6
+        },
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 9.1
+        },
+        {
+          "mask": "LWWL",
+          "pct_of_makes": 0.2
+        }
+      ],
+      "rem_wins_dist": {
+        "2": 0.2,
+        "3": 79.0,
+        "4": 20.8
+      },
+      "week_win_given_make": {
+        "11": 78.7,
+        "12": 90.4,
+        "13": 90.9,
+        "14": 60.6
+      }
+    },
+    "10": {
+      "playoff_pct": 24.1,
+      "top_paths": [
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 30.0
+        },
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 23.1
+        },
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 16.5
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 16.0
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 9.8
+        },
+        {
+          "mask": "LWWL",
+          "pct_of_makes": 1.3
+        }
+      ],
+      "rem_wins_dist": {
+        "2": 4.7,
+        "3": 72.3,
+        "4": 23.1
+      },
+      "week_win_given_make": {
+        "11": 81.9,
+        "12": 88.4,
+        "13": 81.7,
+        "14": 66.4
+      }
+    },
+    "11": {
+      "playoff_pct": 13.3,
+      "top_paths": [
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 30.4
+        },
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 29.4
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 15.1
+        },
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 13.3
+        },
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 11.3
+        },
+        {
+          "mask": "WLWL",
+          "pct_of_makes": 0.2
+        }
+      ],
+      "rem_wins_dist": {
+        "2": 0.5,
+        "3": 70.1,
+        "4": 29.4
+      },
+      "week_win_given_make": {
+        "11": 84.7,
+        "12": 69.2,
+        "13": 88.6,
+        "14": 86.5
+      }
+    },
+    "12": {
+      "playoff_pct": 15.7,
+      "top_paths": [
+        {
+          "mask": "WWLW",
+          "pct_of_makes": 43.5
+        },
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 20.9
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 13.8
+        },
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 11.8
+        },
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 8.7
+        },
+        {
+          "mask": "WWLL",
+          "pct_of_makes": 0.5
+        }
+      ],
+      "rem_wins_dist": {
+        "2": 1.3,
+        "3": 77.7,
+        "4": 20.9
+      },
+      "week_win_given_make": {
+        "11": 87.8,
+        "12": 85.8,
+        "13": 55.2,
+        "14": 90.8
+      }
+    },
+    "13": {
+      "playoff_pct": 88.5,
+      "top_paths": [
+        {
+          "mask": "LWWW",
+          "pct_of_makes": 18.7
+        },
+        {
+          "mask": "LLWW",
+          "pct_of_makes": 16.4
+        },
+        {
+          "mask": "WWWW",
+          "pct_of_makes": 14.6
+        },
+        {
+          "mask": "WLWW",
+          "pct_of_makes": 12.6
+        },
+        {
+          "mask": "LWWL",
+          "pct_of_makes": 10.0
+        },
+        {
+          "mask": "WWWL",
+          "pct_of_makes": 8.1
+        }
+      ],
+      "rem_wins_dist": {
+        "1": 3.5,
+        "2": 40.0,
+        "3": 42.0,
+        "4": 14.6
+      },
+      "week_win_given_make": {
+        "11": 48.4,
+        "12": 59.1,
+        "13": 88.7,
+        "14": 71.4
+      }
+    },
+    "14": {
+      "playoff_pct": 0.0,
+      "top_paths": [],
+      "rem_wins_dist": {},
+      "week_win_given_make": {}
+    }
+  },
+  "schedule": [
+    {
+      "week": 11,
+      "pairs": [
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          13
+        ],
+        [
+          3,
+          14
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          10,
+          12
+        ]
+      ]
+    },
+    {
+      "week": 12,
+      "pairs": [
+        [
+          1,
+          12
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          13
+        ],
+        [
+          5,
+          14
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ]
+    },
+    {
+      "week": 13,
+      "pairs": [
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          12
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          13,
+          14
+        ]
+      ]
+    },
+    {
+      "week": 14,
+      "pairs": [
+        [
+          1,
+          11
+        ],
+        [
+          2,
+          14
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          5,
+          12
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          13
+        ]
+      ]
+    }
+  ],
+  "params_19": {
+    "1": {
+      "mu": 100.78,
+      "sigma": 12.0
+    },
+    "2": {
+      "mu": 111.25,
+      "sigma": 17.35
+    },
+    "3": {
+      "mu": 111.58,
+      "sigma": 13.04
+    },
+    "4": {
+      "mu": 106.15,
+      "sigma": 16.86
+    },
+    "5": {
+      "mu": 95.12,
+      "sigma": 12.0
+    },
+    "6": {
+      "mu": 99.03,
+      "sigma": 12.0
+    },
+    "7": {
+      "mu": 106.88,
+      "sigma": 21.55
+    },
+    "8": {
+      "mu": 97.13,
+      "sigma": 25.96
+    },
+    "9": {
+      "mu": 87.94,
+      "sigma": 20.06
+    },
+    "10": {
+      "mu": 97.45,
+      "sigma": 18.12
+    },
+    "11": {
+      "mu": 97.68,
+      "sigma": 19.34
+    },
+    "12": {
+      "mu": 97.94,
+      "sigma": 16.73
+    },
+    "13": {
+      "mu": 108.03,
+      "sigma": 12.0
+    },
+    "14": {
+      "mu": 88.14,
+      "sigma": 15.07
+    }
+  },
+  "team_schedules": {
+    "2": [
+      {
+        "week": 11,
+        "opponent_id": 13,
+        "opponent": "eleong5",
+        "opponent_owner": "eleong5",
+        "opponent_record": "5-5",
+        "p_win": 0.561
+      },
+      {
+        "week": 12,
+        "opponent_id": 6,
+        "opponent": "WhenPurdyGivesYouVikings",
+        "opponent_owner": "3montyjack",
+        "opponent_record": "4-6",
+        "p_win": 0.719
+      },
+      {
+        "week": 13,
+        "opponent_id": 4,
+        "opponent": "Morning Woody",
+        "opponent_owner": "CockerDaniel",
+        "opponent_record": "5-5",
+        "p_win": 0.583
+      },
+      {
+        "week": 14,
+        "opponent_id": 14,
+        "opponent": "Nacua Correctional Inst.",
+        "opponent_owner": "omv2718",
+        "opponent_record": "2-8",
+        "p_win": 0.843
+      }
+    ],
+    "3": [
+      {
+        "week": 11,
+        "opponent_id": 14,
+        "opponent": "Nacua Correctional Inst.",
+        "opponent_owner": "omv2718",
+        "opponent_record": "2-8",
+        "p_win": 0.88
+      },
+      {
+        "week": 12,
+        "opponent_id": 8,
+        "opponent": "pimpdaddymac33",
+        "opponent_owner": "pimpdaddymac33",
+        "opponent_record": "5-5",
+        "p_win": 0.691
+      },
+      {
+        "week": 13,
+        "opponent_id": 12,
+        "opponent": "greyhizzle44",
+        "opponent_owner": "greyhizzle44",
+        "opponent_record": "4-6",
+        "p_win": 0.74
+      },
+      {
+        "week": 14,
+        "opponent_id": 9,
+        "opponent": "Maye no Loveland on Moon",
+        "opponent_owner": "Joejuod",
+        "opponent_record": "4-6",
+        "p_win": 0.838
+      }
+    ],
+    "7": [
+      {
+        "week": 11,
+        "opponent_id": 9,
+        "opponent": "Maye no Loveland on Moon",
+        "opponent_owner": "Joejuod",
+        "opponent_record": "4-6",
+        "p_win": 0.74
+      },
+      {
+        "week": 12,
+        "opponent_id": 11,
+        "opponent": "Patslife10",
+        "opponent_owner": "Patslife10",
+        "opponent_record": "4-6",
+        "p_win": 0.625
+      },
+      {
+        "week": 13,
+        "opponent_id": 6,
+        "opponent": "WhenPurdyGivesYouVikings",
+        "opponent_owner": "3montyjack",
+        "opponent_record": "4-6",
+        "p_win": 0.625
+      },
+      {
+        "week": 14,
+        "opponent_id": 10,
+        "opponent": "PushingPuka",
+        "opponent_owner": "PushingPuka",
+        "opponent_record": "4-6",
+        "p_win": 0.631
+      }
+    ],
+    "5": [
+      {
+        "week": 11,
+        "opponent_id": 4,
+        "opponent": "Morning Woody",
+        "opponent_owner": "CockerDaniel",
+        "opponent_record": "5-5",
+        "p_win": 0.297
+      },
+      {
+        "week": 12,
+        "opponent_id": 14,
+        "opponent": "Nacua Correctional Inst.",
+        "opponent_owner": "omv2718",
+        "opponent_record": "2-8",
+        "p_win": 0.641
+      },
+      {
+        "week": 13,
+        "opponent_id": 8,
+        "opponent": "pimpdaddymac33",
+        "opponent_owner": "pimpdaddymac33",
+        "opponent_record": "5-5",
+        "p_win": 0.472
+      },
+      {
+        "week": 14,
+        "opponent_id": 12,
+        "opponent": "greyhizzle44",
+        "opponent_owner": "greyhizzle44",
+        "opponent_record": "4-6",
+        "p_win": 0.446
+      }
+    ],
+    "13": [
+      {
+        "week": 11,
+        "opponent_id": 2,
+        "opponent": "Egbukake ",
+        "opponent_owner": "yiakduman",
+        "opponent_record": "8-2",
+        "p_win": 0.439
+      },
+      {
+        "week": 12,
+        "opponent_id": 4,
+        "opponent": "Morning Woody",
+        "opponent_owner": "CockerDaniel",
+        "opponent_record": "5-5",
+        "p_win": 0.536
+      },
+      {
+        "week": 13,
+        "opponent_id": 14,
+        "opponent": "Nacua Correctional Inst.",
+        "opponent_owner": "omv2718",
+        "opponent_record": "2-8",
+        "p_win": 0.849
+      },
+      {
+        "week": 14,
+        "opponent_id": 8,
+        "opponent": "pimpdaddymac33",
+        "opponent_owner": "pimpdaddymac33",
+        "opponent_record": "5-5",
+        "p_win": 0.648
+      }
+    ],
+    "4": [
+      {
+        "week": 11,
+        "opponent_id": 5,
+        "opponent": "Team Glue Eaters",
+        "opponent_owner": "printdot",
+        "opponent_record": "6-4",
+        "p_win": 0.703
+      },
+      {
+        "week": 12,
+        "opponent_id": 13,
+        "opponent": "eleong5",
+        "opponent_owner": "eleong5",
+        "opponent_record": "5-5",
+        "p_win": 0.464
+      },
+      {
+        "week": 13,
+        "opponent_id": 2,
+        "opponent": "Egbukake ",
+        "opponent_owner": "yiakduman",
+        "opponent_record": "8-2",
+        "p_win": 0.417
+      },
+      {
+        "week": 14,
+        "opponent_id": 6,
+        "opponent": "WhenPurdyGivesYouVikings",
+        "opponent_owner": "3montyjack",
+        "opponent_record": "4-6",
+        "p_win": 0.635
+      }
+    ],
+    "8": [
+      {
+        "week": 11,
+        "opponent_id": 1,
+        "opponent": "Josh Allen\u2019s Old Tweets",
+        "opponent_owner": "EAmbort26",
+        "opponent_record": "4-6",
+        "p_win": 0.449
+      },
+      {
+        "week": 12,
+        "opponent_id": 3,
+        "opponent": "This Kraft Got Me Tuten",
+        "opponent_owner": "ElliottAnd",
+        "opponent_record": "8-2",
+        "p_win": 0.309
+      },
+      {
+        "week": 13,
+        "opponent_id": 5,
+        "opponent": "Team Glue Eaters",
+        "opponent_owner": "printdot",
+        "opponent_record": "6-4",
+        "p_win": 0.528
+      },
+      {
+        "week": 14,
+        "opponent_id": 13,
+        "opponent": "eleong5",
+        "opponent_owner": "eleong5",
+        "opponent_record": "5-5",
+        "p_win": 0.352
+      }
+    ],
+    "6": [
+      {
+        "week": 11,
+        "opponent_id": 11,
+        "opponent": "Patslife10",
+        "opponent_owner": "Patslife10",
+        "opponent_record": "4-6",
+        "p_win": 0.524
+      },
+      {
+        "week": 12,
+        "opponent_id": 2,
+        "opponent": "Egbukake ",
+        "opponent_owner": "yiakduman",
+        "opponent_record": "8-2",
+        "p_win": 0.281
+      },
+      {
+        "week": 13,
+        "opponent_id": 7,
+        "opponent": "rattpack000",
+        "opponent_owner": "rattpack000",
+        "opponent_record": "7-3",
+        "p_win": 0.375
+      },
+      {
+        "week": 14,
+        "opponent_id": 4,
+        "opponent": "Morning Woody",
+        "opponent_owner": "CockerDaniel",
+        "opponent_record": "5-5",
+        "p_win": 0.365
+      }
+    ],
+    "1": [
+      {
+        "week": 11,
+        "opponent_id": 8,
+        "opponent": "pimpdaddymac33",
+        "opponent_owner": "pimpdaddymac33",
+        "opponent_record": "5-5",
+        "p_win": 0.551
+      },
+      {
+        "week": 12,
+        "opponent_id": 12,
+        "opponent": "greyhizzle44",
+        "opponent_owner": "greyhizzle44",
+        "opponent_record": "4-6",
+        "p_win": 0.555
+      },
+      {
+        "week": 13,
+        "opponent_id": 9,
+        "opponent": "Maye no Loveland on Moon",
+        "opponent_owner": "Joejuod",
+        "opponent_record": "4-6",
+        "p_win": 0.709
+      },
+      {
+        "week": 14,
+        "opponent_id": 11,
+        "opponent": "Patslife10",
+        "opponent_owner": "Patslife10",
+        "opponent_record": "4-6",
+        "p_win": 0.554
+      }
+    ],
+    "10": [
+      {
+        "week": 11,
+        "opponent_id": 12,
+        "opponent": "greyhizzle44",
+        "opponent_owner": "greyhizzle44",
+        "opponent_record": "4-6",
+        "p_win": 0.492
+      },
+      {
+        "week": 12,
+        "opponent_id": 9,
+        "opponent": "Maye no Loveland on Moon",
+        "opponent_owner": "Joejuod",
+        "opponent_record": "4-6",
+        "p_win": 0.638
+      },
+      {
+        "week": 13,
+        "opponent_id": 11,
+        "opponent": "Patslife10",
+        "opponent_owner": "Patslife10",
+        "opponent_record": "4-6",
+        "p_win": 0.497
+      },
+      {
+        "week": 14,
+        "opponent_id": 7,
+        "opponent": "rattpack000",
+        "opponent_owner": "rattpack000",
+        "opponent_record": "7-3",
+        "p_win": 0.369
+      }
+    ],
+    "12": [
+      {
+        "week": 11,
+        "opponent_id": 10,
+        "opponent": "PushingPuka",
+        "opponent_owner": "PushingPuka",
+        "opponent_record": "4-6",
+        "p_win": 0.508
+      },
+      {
+        "week": 12,
+        "opponent_id": 1,
+        "opponent": "Josh Allen\u2019s Old Tweets",
+        "opponent_owner": "EAmbort26",
+        "opponent_record": "4-6",
+        "p_win": 0.445
+      },
+      {
+        "week": 13,
+        "opponent_id": 3,
+        "opponent": "This Kraft Got Me Tuten",
+        "opponent_owner": "ElliottAnd",
+        "opponent_record": "8-2",
+        "p_win": 0.26
+      },
+      {
+        "week": 14,
+        "opponent_id": 5,
+        "opponent": "Team Glue Eaters",
+        "opponent_owner": "printdot",
+        "opponent_record": "6-4",
+        "p_win": 0.554
+      }
+    ],
+    "11": [
+      {
+        "week": 11,
+        "opponent_id": 6,
+        "opponent": "WhenPurdyGivesYouVikings",
+        "opponent_owner": "3montyjack",
+        "opponent_record": "4-6",
+        "p_win": 0.476
+      },
+      {
+        "week": 12,
+        "opponent_id": 7,
+        "opponent": "rattpack000",
+        "opponent_owner": "rattpack000",
+        "opponent_record": "7-3",
+        "p_win": 0.375
+      },
+      {
+        "week": 13,
+        "opponent_id": 10,
+        "opponent": "PushingPuka",
+        "opponent_owner": "PushingPuka",
+        "opponent_record": "4-6",
+        "p_win": 0.503
+      },
+      {
+        "week": 14,
+        "opponent_id": 1,
+        "opponent": "Josh Allen\u2019s Old Tweets",
+        "opponent_owner": "EAmbort26",
+        "opponent_record": "4-6",
+        "p_win": 0.446
+      }
+    ],
+    "9": [
+      {
+        "week": 11,
+        "opponent_id": 7,
+        "opponent": "rattpack000",
+        "opponent_owner": "rattpack000",
+        "opponent_record": "7-3",
+        "p_win": 0.26
+      },
+      {
+        "week": 12,
+        "opponent_id": 10,
+        "opponent": "PushingPuka",
+        "opponent_owner": "PushingPuka",
+        "opponent_record": "4-6",
+        "p_win": 0.362
+      },
+      {
+        "week": 13,
+        "opponent_id": 1,
+        "opponent": "Josh Allen\u2019s Old Tweets",
+        "opponent_owner": "EAmbort26",
+        "opponent_record": "4-6",
+        "p_win": 0.291
+      },
+      {
+        "week": 14,
+        "opponent_id": 3,
+        "opponent": "This Kraft Got Me Tuten",
+        "opponent_owner": "ElliottAnd",
+        "opponent_record": "8-2",
+        "p_win": 0.162
+      }
+    ],
+    "14": [
+      {
+        "week": 11,
+        "opponent_id": 3,
+        "opponent": "This Kraft Got Me Tuten",
+        "opponent_owner": "ElliottAnd",
+        "opponent_record": "8-2",
+        "p_win": 0.12
+      },
+      {
+        "week": 12,
+        "opponent_id": 5,
+        "opponent": "Team Glue Eaters",
+        "opponent_owner": "printdot",
+        "opponent_record": "6-4",
+        "p_win": 0.359
+      },
+      {
+        "week": 13,
+        "opponent_id": 13,
+        "opponent": "eleong5",
+        "opponent_owner": "eleong5",
+        "opponent_record": "5-5",
+        "p_win": 0.151
+      },
+      {
+        "week": 14,
+        "opponent_id": 2,
+        "opponent": "Egbukake ",
+        "opponent_owner": "yiakduman",
+        "opponent_record": "8-2",
+        "p_win": 0.157
+      }
+    ]
+  },
+  "path_blurbs": {
+    "2": "Essentially locked \u2014 almost every sim finishes inside the top 7.",
+    "3": "Essentially locked \u2014 almost every sim finishes inside the top 7.",
+    "7": "Essentially locked \u2014 almost every sim finishes inside the top 7.",
+    "5": "Typical ticket: about 2 more win(s) over W11\u201314. Most common make-path mask LWWL (W=win L=loss by week). W12 look like must-wins among make paths.",
+    "13": "Strong favorite. Avoid a total collapse; most paths still clear the cut.",
+    "4": "Typical ticket: about 2 more win(s) over W11\u201314. Most common make-path mask WLLW (W=win L=loss by week). W11, W14 look like must-wins among make paths.",
+    "8": "Typical ticket: about 2 more win(s) over W11\u201314. Most common make-path mask WLWL (W=win L=loss by week). W13, W11 look like must-wins among make paths.",
+    "6": "Typical ticket: about 3 more win(s) over W11\u201314. Most common make-path mask WLWW (W=win L=loss by week). W11, W14 look like must-wins among make paths.",
+    "1": "Typical ticket: about 3 more win(s) over W11\u201314. Most common make-path mask WWWW (W=win L=loss by week). W13, W11, W14, W12 look like must-wins among make paths.",
+    "10": "Typical ticket: about 3 more win(s) over W11\u201314. Most common make-path mask WWWL (W=win L=loss by week). W12, W11, W13 look like must-wins among make paths.",
+    "12": "Typical ticket: about 3 more win(s) over W11\u201314. Most common make-path mask WWLW (W=win L=loss by week). W14, W11, W12 look like must-wins among make paths.",
+    "11": "Typical ticket: about 3 more win(s) over W11\u201314. Most common make-path mask WLWW (W=win L=loss by week). W13, W14, W11 look like must-wins among make paths.",
+    "9": "Typical ticket: about 3 more win(s) over W11\u201314. Most common make-path mask WWWL (W=win L=loss by week). W13, W12, W11 look like must-wins among make paths.",
+    "14": "All but mathematically dead in these sims \u2014 needs a miracle win stack plus chaos above."
+  },
+  "ui": {
+    "title": "Playoff Path Board",
+    "subtitle": "Should\u2019ve kept Watson \u00b7 14 teams \u00b7 top 7 in",
+    "default_roster_id": 6
+  }
+}
