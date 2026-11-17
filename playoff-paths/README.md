@@ -29,3 +29,9 @@ After the first successful deploy, the site URL is:
 ## Data
 
 `data.json` is a precomputed Monte Carlo snapshot (W1–9 scoring engine, 80k sims, weeks 11–14). Refresh by re-running the sim script and replacing the file.
+
+## Live URL
+
+- Board: https://3montyjack.github.io/ffdetails/playoff-paths/
+- Root https://3montyjack.github.io/ffdetails/ redirects there while Pages is on **Deploy from a branch / (root)**.
+- Preferred later: Settings → Pages → Source **GitHub Actions** (workflow uploads `playoff-paths/` as the site root).
