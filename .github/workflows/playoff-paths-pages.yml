@@ -29,6 +29,9 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          # Enable Pages (Actions source) when the site does not exist yet.
+          enablement: true
 
       - name: Upload playoff-paths artifact
         uses: actions/upload-pages-artifact@v3
